@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - La Rivera</title>
+  <!-- 🔥 CORRIGE LA RUTA DEL CSS -->
+  <link rel="stylesheet" href="../styles/index.css" />
+</head>
+<body>
+  <main class="login-page">
+    <article class="login-card">
+      <!-- Logo -->
+      <header class="login-card__header">
+        <img src="../assets/images/logo.png" alt="Logo" class="login-card__logo" />
+        <img src="../assets/images/La_Rivera.png" alt="La Rivera" class="login-card__brand" />
+      </header>
+
+      <!-- Formulario -->
+      <section class="login-card__form">
+        <h1 class="login-card__title">Ingresa</h1>
+        <!-- 🔥 AGREGA EL ID AL FORMULARIO -->
+        <form id="loginForm" class="login-form">
+          <div class="login-form__group">
+            <!-- 🔥 AGREGA NAME AL INPUT -->
+            <input type="email" name="email" placeholder="Correo" required class="login-form__input" />
+          </div>
+          <div class="login-form__group">
+            <!-- 🔥 AGREGA NAME AL INPUT -->
+            <input type="password" name="password" placeholder="Contraseña" required class="login-form__input" />
+          </div>
+          <a href="#" class="login-form__forgot">¿Olvidaste tu contraseña?</a>
+          <button type="submit" class="btn btn--primary btn--full">Ingresa</button>
+        </form>
+      </section>
+
+      <!-- Separador -->
+      <div class="login-card__separator">
+        <span>Ingresa con</span>
+      </div>
+
+      <!-- Login social -->
+      <nav class="login-card__social">
+        <a href="#" class="social-login__link">
+          <img src="../assets/images/google.png" alt="Google" class="social-login__icon" />
+        </a>
+        <a href="#" class="social-login__link">
+          <img src="../assets/images/facebook.png" alt="Facebook" class="social-login__icon" />
+        </a>
+        <a href="#" class="social-login__link">
+          <img src="../assets/images/linkedin.png" alt="LinkedIn" class="social-login__icon" />
+        </a>
+      </nav>
+
+      <!-- Footer -->
+      <footer class="login-card__footer">
+        <p>¿No tienes cuenta? <a href="register.html" class="link">Regístrate aquí</a></p>
+      </footer>
+    </article>
+  </main>
+  <!-- 🔥 CORRIGE LA RUTA DEL JS -->
+  <script src="../js/auth/login.js"></script>
+</body>
+</html>

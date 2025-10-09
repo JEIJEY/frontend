@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Inventarios - La Rivera</title>
+  <link rel="stylesheet" href="src/styles/index.css" />
+  <script>
+    setTimeout(function() {
+      window.location.href = "src/pages/landing.html";
+    }, 1500);
+  </script>
+</head>
+<body>
+  <!-- Loader/Redirect screen -->
+  <div class="redirect">
+    <div class="redirect__content">
+      <h1 class="redirect__title">La Rivera</h1>
+      <p class="redirect__message">Cargando sistema de inventarios...</p>
+      <div class="redirect__spinner"></div>
+      <div class="redirect__actions">
+        <button class="btn btn--primary" onclick="window.location.href='src/pages/landing.html'">
+          Entrar Ahora
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

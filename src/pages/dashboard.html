@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - La Rivera</title>
+  
+  <!-- Fuentes -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+  
+  <!-- SOLO ESTE LINK -->
+  <link rel="stylesheet" href="../styles/index.css">
+</head>
+<body>
+  <div class="grid-container">
+    
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-logo">
+        <img src="../assets/images/logo.png" alt="Logo La Rivera">
+      </div>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+      <a href="#" class="dashboard-logo">
+        <img src="../assets/images/logo.png" alt="Logo La Rivera">
+      </a>
+
+      <nav class="navbar-header">
+        <a href="#">Inicio</a>
+        <a href="#">Productos</a>
+        <a href="#">Servicios</a>
+        <a href="#">Acerca</a>
+        <a href="#">Contacto</a>
+      </nav>
+
+      <div class="hamburger-wrapper">
+        <div class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <h1 class="dashboard-main__title">Dashboard</h1>
+
+      <section class="dashboard-cards">
+        <div class="card">
+          <h2>Ventas</h2>
+          <p>$12,450</p>
+        </div>
+        <div class="card">
+          <h2>Usuarios</h2>
+          <p>245</p>
+        </div>
+        <div class="card">
+          <h2>Productos</h2>
+          <p>56</p>
+        </div>
+        <div class="card">
+          <h2>Pedidos</h2>
+          <p>34</p>
+        </div>
+      </section>
+
+      <section class="dashboard-table">
+        <h2>Últimos pedidos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Producto</th>
+              <th>Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Juan Pérez</td>
+              <td>Producto A</td>
+              <td>$120</td>
+              <td>Entregado</td>
+            </tr>
+            <tr>
+              <td>002</td>
+              <td>María López</td>
+              <td>Producto B</td>
+              <td>$80</td>
+              <td>Pendiente</td>
+            </tr>
+            <tr>
+              <td>003</td>
+              <td>Carlos Ruiz</td>
+              <td>Producto C</td>
+              <td>$45</td>
+              <td>Enviado</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Hamburger toggle
+    const hamburgerWrapper = document.querySelector(".hamburger-wrapper");
+    hamburgerWrapper.addEventListener("click", () => {
+      hamburgerWrapper.classList.toggle("active");
+      document.querySelector(".dashboard-sidebar").classList.toggle("active");
+    });
+
+    // Sticky header
+    const header = document.querySelector(".dashboard-header");
+    const triggerHeight = 165;
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > triggerHeight) {
+        header.classList.add("header-fullwidth");
+      } else {
+        header.classList.remove("header-fullwidth");
+      }
+    });
+
+    // Protección de ruta
+    const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    if (!usuarioLogueado) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

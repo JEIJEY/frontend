@@ -1,0 +1,10 @@
+.dashboard-sidebar {
+  grid-area: sidebar;
+  width: 400px;
+  height: 130vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  clip-path: path("M 0,0 L 200,0 A 20,20 0,0,1 215,15 L 215,135 A 20,20 0,0,0 230,150 L 385,150 A 20,20 0,0,1 400,165 L 400,1035 A 20,20 0,0,1 385,1050 L 230,1050 A 20,20 0,0,0 215,1065 L 215,1185 A 20,20 0,0,1 200,1200 L 0,1200 L 0,0 Z");
+  position: relative;
+  top: -60px; 
+}

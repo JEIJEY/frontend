@@ -1,0 +1,73 @@
+/* =========== BUTTON ATOMS =========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background: transparent;
+  color: var(--white-color);
+}
+
+.btn--primary {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 15px rgba(46, 184, 114, 0.3);
+}
+
+.btn--secondary {
+  border: 2px solid var(--white-color);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 184, 114, 0.4);
+}
+
+/* Botón de login específico */
+.btn--login {
+  background: var(--gradient-primary);
+  color: var(--white-color);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+}
+
+.btn--login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 184, 114, 0.4);
+  background: var(--gradient-secondary);
+}
+
+/* Botón de login específico - ESTILOS ORIGINALES */
+.btn--login {
+  background-color: #FFF59D;
+  border: none;
+  border-radius: 20px;
+  padding: var(--space-3);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background 0.3s;
+  color: #333;
+  display: block;
+  width: 100%;
+}
+
+.btn--login:hover {
+  background-color: #FFE082;
+  transform: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

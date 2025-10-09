@@ -1,0 +1,48 @@
+/* =========== ICON ATOMS =========== */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: all var(--transition-normal);
+}
+
+.icon--small {
+  width: 16px;
+  height: 16px;
+}
+
+.icon--large {
+  width: 32px;
+  height: 32px;
+}
+
+.icon--primary {
+  color: var(--primary-color);
+}
+
+.icon--white {
+  color: var(--white-color);
+}
+
+.icon--gradient {
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
