@@ -3,13 +3,17 @@
   grid-template-areas:
     "sidebar header"
     "sidebar main";
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 350px 1fr;
   grid-template-rows: 145px 1fr;
-  gap: 100;
   height: 100vh;
   width: 100vw;
   
 
   position: relative;
-  top: -20px; 
+  top: -19px; 
+}
+
+.dashboard-main {
+  grid-area: main;
+  transform: translateX(-30px); /* 💥 Ajusta el valor hasta que quede perfecto */
 }

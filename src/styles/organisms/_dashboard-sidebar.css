@@ -1,10 +1,118 @@
+/* ============ SIDEBAR GENERAL ============ */
+
+
 .dashboard-sidebar {
   grid-area: sidebar;
-  width: 400px;
-  height: 130vh;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  clip-path: path("M 0,0 L 200,0 A 20,20 0,0,1 215,15 L 215,135 A 20,20 0,0,0 230,150 L 385,150 A 20,20 0,0,1 400,165 L 400,1035 A 20,20 0,0,1 385,1050 L 230,1050 A 20,20 0,0,0 215,1065 L 215,1185 A 20,20 0,0,1 200,1200 L 0,1200 L 0,0 Z");
+  width: 350px;
+  height: max(770px, 100vh);
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px 20px;
+  clip-path: path("M 0,0 L 200,0 A 20,20 0,0,1 215,15 L 215,135 A 20,20 0,0,0 230,150 L 300,150 A 20,20 0,0,1 315,165 L 315,615 A 20,20 0,0,1 300,630 L 230,630 A 20,20 0,0,0 215,650 L 215,750 A 20,20 0,0,1 200,770 L 0,770 L 0,0 Z");
   position: relative;
-  top: -60px; 
+  top: -60px;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
+
+/* ============ CONTENIDO INTERIOR ============ */
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============ PERFIL ============ */
+.sidebar-profile {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.sidebar-profile__img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1abc9c;
+}
+
+.sidebar-profile__info {
+  font-size: 14px;
+}
+
+/* ============ MENÚ ============ */
+.sidebar-menu {
+  margin-top: 100px;
+}
+
+.sidebar-menu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu__item {
+  margin-bottom: 12px;
+}
+
+.sidebar-menu__link {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #ecf0f1;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.sidebar-menu__item.active .sidebar-menu__link,
+.sidebar-menu__link:hover {
+  background-color: #1abc9c;
+  color: #ffffff;
+}
+
+/* ============ FOOTER ============ */
+.sidebar-footer {
+  margin-top: auto;
+  margin-bottom: 300px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  padding-top: -20px;
+}
+
+
+
+/* ============ MEDIA QUERIES ============ */
+@media (max-height: 800px) {
+  .sidebar-footer {
+    position: relative;
+    bottom: -100px;
+  }
+}
+
+/* ============ ANCHOS INDIVIDUALES ============ */
+/* Menú */
+.sidebar-menu__item:nth-child(1) .sidebar-menu__link,
+.sidebar-menu__item:nth-child(2) .sidebar-menu__link,
+.sidebar-menu__item:nth-child(3) .sidebar-menu__link,
+.sidebar-menu__item:nth-child(4) .sidebar-menu__link,
+.sidebar-menu__item:nth-child(5) .sidebar-menu__link {
+  width: 220px;
+}
+
+/* Footer */
+.sidebar-footer__link:nth-child(1),
+.sidebar-footer__link:nth-child(2) {
+  width: 100px;
+}
+
+
+
+
+
+

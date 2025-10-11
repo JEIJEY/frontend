@@ -1,4 +1,6 @@
 /* =========== BUTTON ATOMS =========== */
+
+/* 🔹 Base general para todos los botones */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -17,57 +19,46 @@
   color: var(--white-color);
 }
 
+/* 🔹 Botón primario */
 .btn--primary {
   background: var(--gradient-primary);
+  color: var(--white-color);
   box-shadow: 0 4px 15px rgba(46, 184, 114, 0.3);
 }
 
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 184, 114, 0.4);
+}
+
+/* 🔹 Botón secundario (transparente, con borde blanco) */
 .btn--secondary {
   border: 2px solid var(--white-color);
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  color: var(--white-color);
 }
 
-.btn:hover {
+.btn--secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 184, 114, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
 }
 
-/* Botón de login específico */
+/* 🔹 Botón de login */
 .btn--login {
   background: var(--gradient-primary);
   color: var(--white-color);
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  border-radius: var(--border-radius);
-  transition: all var(--transition-normal);
-}
-
-.btn--login:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(46, 184, 114, 0.4);
-  background: var(--gradient-secondary);
-}
-
-/* Botón de login específico - ESTILOS ORIGINALES */
-.btn--login {
-  background-color: #FFF59D;
-  border: none;
-  border-radius: 20px;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-6);
   font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: background 0.3s;
-  color: #333;
-  display: block;
+  font-weight: var(--font-semibold);
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   width: 100%;
 }
 
 .btn--login:hover {
-  background-color: #FFE082;
-  transform: none;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background: var(--gradient-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
