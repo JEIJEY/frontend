@@ -43,6 +43,8 @@
 @import url("./organisms/_dashboard-sidebar.css");
 @import url("./organisms/_dashboard-header.css");
 @import url("./organisms/_dashboard-main.css");
+@import url("./organisms/_inventario.css");
+
 
 /* Templates */
 @import url("./templates/_landing-template.css");

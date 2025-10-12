@@ -1,108 +1,100 @@
-Listado de rutas de carpetas para el volumen Windows-SSD
-El número de serie del volumen es 6454-3887
-C:\USERS\JEIJE\DESKTOP\FRONTEND\SRC
-+---assets
-|   +---fonts
-|   +---icons
-|   \---images
-|           add-product.png
-|           AVATAR.png
-|           categories.jpg
-|           coca.png
-|           facebook copy.png
-|           facebook.png
-|           fondo-mym.jpg
-|           fondo_coca.jpg
-|           gmail.png
-|           google.png
-|           icons8-whatsapp-48.png
-|           inventory.png
-|           La_Rivera.png
-|           linkedin copy.png
-|           linkedin.png
-|           logo copy.png
-|           logo.png
-|           m&m-rojo.png
-|           m&m.png
-|           nutella-fondo.jpg
-|           nutella.png
-|           stock-control.jpg
-|           whatsapp.png
-|           
-+---js
-|   +---auth
-|   |       login.js
-|   |       register.js
-|   |       
-|   +---components
-|   |       logout-button.js
-|   |       
-|   \---dashboard
-|           dashboard.js
-|           inventario.js
-|           
-+---pages
-|   |   dashboard.html
-|   |   landing.html
-|   |   login.html
-|   |   register.html
-|   |   
-|   \---dashboard
-|           agregar-producto.html
-|           configuracion.html
-|           inventario.html
-|           reportes.html
-|           usuarios.html
-|           
-\---styles
-    |   index.css
-    |   
-    +---atoms
-    |       _buttons.css
-    |       _headings.css
-    |       _icons.css
-    |       _images.css
-    |       _inputs.css
-    |       _labels.css
-    |       _links.css
-    |       _logout-button.css
-    |       
-    +---base
-    |       _base.css
-    |       _reset.css
-    |       _typography.css
-    |       _variables.css
-    |       
-    +---molecules
-    |       _cards.css
-    |       _forms.css
-    |       _list-items.css
-    |       _login-footer.css
-    |       _logo.css
-    |       _navigation.css
-    |       _product-cards.css
-    |       _separator.css
-    |       _social-links.css
-    |       _social-login.css
-    |       
-    +---organisms
-    |       _dashboard-header.css
-    |       _dashboard-main.css
-    |       _dashboard-sidebar.css
-    |       _dashboard.css
-    |       _footer.css
-    |       _header.css
-    |       _hero.css
-    |       _login-card.css
-    |       _login-form.css
-    |       _products-grid.css
-    |       _promo-section.css
-    |       _redirect-screen.css
-    |       
-    +---templates
-    \---utilities
-            _animations.css
-            _grid.css
-            _responsive.css
-            _spacing.css
-            
+|-- [src]
+    |-- [assets]
+        |-- [fonts]
+        |-- [icons]
+        |-- [images]
+            |-- add-product.png
+            |-- AVATAR.png
+            |-- categories.jpg
+            |-- coca.png
+            |-- facebook copy.png
+            |-- facebook.png
+            |-- fondo_coca.jpg
+            |-- fondo-mym.jpg
+            |-- gmail.png
+            |-- google.png
+            |-- icons8-whatsapp-48.png
+            |-- inventory.png
+            |-- La_Rivera.png
+            |-- linkedin copy.png
+            |-- linkedin.png
+            |-- logo copy.png
+            |-- logo.png
+            |-- m&m-rojo.png
+            |-- m&m.png
+            |-- nutella-fondo.jpg
+            |-- nutella.png
+            |-- stock-control.jpg
+            |-- whatsapp.png
+    |-- [js]
+        |-- [auth]
+            |-- login.js
+            |-- register.js
+        |-- [components]
+            |-- logout-button.js
+        |-- [dashboard]
+            |-- dashboard.js
+            |-- inventario.js
+    |-- [pages]
+        |-- [dashboard]
+            |-- agregar-producto.html
+            |-- configuracion.html
+            |-- inventario.html
+            |-- reportes.html
+            |-- usuarios.html
+        |-- dashboard.html
+        |-- landing.html
+        |-- login.html
+        |-- register.html
+    |-- [styles]
+        |-- [atoms]
+            |-- _buttons.css
+            |-- _headings.css
+            |-- _icons.css
+            |-- _images.css
+            |-- _inputs.css
+            |-- _labels.css
+            |-- _links.css
+            |-- _logout-button.css
+        |-- [base]
+            |-- _base.css
+            |-- _reset.css
+            |-- _typography.css
+            |-- _variables.css
+        |-- [molecules]
+            |-- _cards.css
+            |-- _forms.css
+            |-- _list-items.css
+            |-- _login-footer.css
+            |-- _logo.css
+            |-- _navigation.css
+            |-- _product-cards.css
+            |-- _separator.css
+            |-- _social-links.css
+            |-- _social-login.css
+        |-- [organisms]
+            |-- _dashboard-header.css
+            |-- _dashboard-main.css
+            |-- _dashboard-sidebar.css
+            |-- _dashboard.css
+            |-- _footer.css
+            |-- _header.css
+            |-- _hero.css
+            |-- _inventario.css
+            |-- _login-card.css
+            |-- _login-form.css
+            |-- _products-grid.css
+            |-- _promo-section.css
+            |-- _redirect-screen.css
+        |-- [templates]
+        |-- [utilities]
+            |-- _animations.css
+            |-- _grid.css
+            |-- _responsive.css
+            |-- _spacing.css
+        |-- index.css
+|-- .gitignore
+|-- estructura.txt
+|-- index.html
+|-- package-lock.json
+|-- package.json

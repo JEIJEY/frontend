@@ -10,12 +10,13 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&display=swap"
     />
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
     />
 
-    <!-- Estilos -->
+    <!-- ✅ Estilos principales -->
     <link rel="stylesheet" href="../styles/index.css" />
   </head>
 
@@ -42,32 +43,43 @@
         <nav class="sidebar-menu">
           <ul class="sidebar-menu__list">
             <li class="sidebar-menu__item active">
-              <a href="#" class="sidebar-menu__link" data-seccion="inventario">
+              <a
+                href="./dashboard/inventario.html"
+                class="sidebar-menu__link"
+                data-seccion="inventario"
+              >
                 📦 Inventario
               </a>
             </li>
             <li class="sidebar-menu__item">
               <a
-                href="#"
+                href="./dashboard/agregar-producto.html"
                 class="sidebar-menu__link"
                 data-seccion="agregar-producto"
               >
-                ➕ Agregar producto
-              </a>
-            </li>
-            <li class="sidebar-menu__item">
-              <a href="#" class="sidebar-menu__link" data-seccion="usuarios">
-                👥 Usuarios
-              </a>
-            </li>
-            <li class="sidebar-menu__item">
-              <a href="#" class="sidebar-menu__link" data-seccion="reportes">
-                📊 Reportes
+                ➕ Movimientos
               </a>
             </li>
             <li class="sidebar-menu__item">
               <a
-                href="#"
+                href="./dashboard/usuarios.html"
+                class="sidebar-menu__link"
+                data-seccion="usuarios"
+              >
+                👥 Usuarios
+                <li class="sidebar-menu__item">
+                  <a
+                    href="./dashboard/reportes.html"
+                    class="sidebar-menu__link"
+                    data-seccion="reportes"
+                  />
+                  > 📊 Reportes
+                </li></a
+              >
+            </li>
+            <li class="sidebar-menu__item">
+              <a
+                href="./dashboard/configuracion.html"
                 class="sidebar-menu__link"
                 data-seccion="configuracion"
               >
@@ -79,8 +91,6 @@
 
         <!-- FOOTER DEL SIDEBAR -->
         <div class="sidebar-footer">
-          
-
           <!-- BOTÓN LOGOUT ANIMADO -->
           <button class="logoutButton" id="logoutButton">
             <svg class="doorway" viewBox="0 0 100 100">
@@ -171,6 +181,6 @@
 
     <!-- Scripts -->
     <script src="../js/components/logout-button.js"></script>
-    <script src="../js/dashboard/dashboard.js" type="module"></script>
+    <script type="module" src="../js/dashboard/dashboard.js"></script>
   </body>
 </html>

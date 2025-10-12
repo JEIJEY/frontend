@@ -1,34 +1,62 @@
-// dashboard.js
+// 1) Tomamos la referencia al contenedor principal donde se inyectarán las vistas del dashboard.
 const main = document.querySelector(".dashboard-main");
 
-// Cargar sección por defecto
+
+// 2) Función asíncrona que carga una sección HTML dentro de <main> y, si aplica,
+//    importa el JS específico de esa sección (carga bajo demanda = mejor rendimiento).
+async function cargarSeccion(nombreSeccion) {
+  try {
+    // 2.1) Pedimos el fragmento HTML de la sección (por ejemplo: ./dashboard/inventario.html).
+    const res = await fetch(`./dashboard/${nombreSeccion}.html`);
+
+    // 2.2) Si el servidor responde pero con error HTTP (404, 500, etc.), lanzamos una excepción propia.
+    if (!res.ok) throw new Error(`No se encontró ${nombreSeccion}.html`);
+
+    // 2.3) Convertimos la respuesta en texto (el HTML de la sección).
+    const html = await res.text();
+
+    // 2.4) Inyectamos el HTML en el contenedor principal del dashboard.
+    main.innerHTML = html;
+
+    // 2.5) Pequeña pausa para asegurar que el DOM insertado esté disponible
+    //      antes de inicializar el JS específico de la sección.
+    //      (innerHTML es síncrono, pero si el módulo busca nodos recién insertados,
+    //      este "respiro" evita carreras de tiempo).
+    await new Promise(r => setTimeout(r, 50));
+
+    // 2.6) Según la sección pedida, cargamos dinámicamente el módulo JS correspondiente.
+    //      Esto evita cargar todos los scripts de golpe (mejor primera carga).
+    switch (nombreSeccion) {
+      case "inventario":
+        // import(...) devuelve una promesa con el "namespace" del módulo.
+        // Llamamos a la función pública que inicializa la sección.
+        import("./inventario.js").then(mod => mod.inicializarInventario());
+        break;
+
+      case "agregar-producto":
+        // Si el módulo solo auto-ejecuta lógica al importarse y no expone funciones,
+        // basta con importarlo (sin .then).
+        import("./agregar-producto.js");
+        break;
+    }
+
+  } catch (err) {
+    // 2.7) Si algo falla (fetch, import, etc.), lo registramos y mostramos un mensaje en pantalla.
+    console.error("❌ Error al cargar sección:", err);
+    main.innerHTML = `<p>Error al cargar ${nombreSeccion}</p>`;
+  }
+}
+
+
+// 3) Cargamos por defecto la sección "inventario" al iniciar la app.
 cargarSeccion("inventario");
 
-// Escuchar clicks en el sidebar
+
+// 4) Activamos la navegación del sidebar: por cada enlace con .sidebar-menu__link
+//    prevenimos la navegación estándar y llamamos a cargarSeccion() con su data-seccion.
 document.querySelectorAll(".sidebar-menu__link").forEach(link => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const seccion = link.dataset.seccion;
-    cargarSeccion(seccion);
+  link.addEventListener("click", e => {
+    e.preventDefault();                       // Evita que el <a> recargue la página.
+    cargarSeccion(link.dataset.seccion);      // Usa el atributo data-seccion="..." del enlace.
   });
 });
-
-function cargarSeccion(nombreSeccion) {
-  fetch(`../pages/dashboard/${nombreSeccion}.html`)
-    .then(res => res.text())
-    .then(html => {
-      main.innerHTML = html;
-
-      // Después de cargar el HTML, importar el JS de la sección
-      switch(nombreSeccion) {
-        case "inventario":
-          import("./inventario.js");
-          break;
-        case "agregar-producto":
-          import("./agregar-producto.js");
-          break;
-        // Agrega más secciones si tienen JS
-      }
-    })
-    .catch(err => console.error("Error al cargar sección:", err));
-}

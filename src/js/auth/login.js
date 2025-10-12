@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const formData = new FormData(loginForm);
       const datos = {
         email: formData.get("email"),
-        password: formData.get("password")
+        password: formData.get("password"),
       };
 
       console.log("📤 Enviando datos de login:", datos);
@@ -42,10 +42,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!response.ok) {
         const errorData = await response.json();
         console.log("🚨 ERROR DEL BACKEND:", errorData);
-        
+
         // Mostrar errores en alert legible
         if (errorData.errors && errorData.errors.length > 0) {
-          const erroresTexto = errorData.errors.join('\n• ');
+          const erroresTexto = errorData.errors.join("\n• ");
           alert("❌ Errores:\n• " + erroresTexto);
         } else {
           alert("❌ Error: " + (errorData.message || "Credenciales inválidas"));
@@ -56,17 +56,24 @@ document.addEventListener("DOMContentLoaded", function () {
       // Login exitoso
       const result = await response.json();
       console.log("🎉 Login exitoso:", result);
-      
-      // Guardar token en localStorage
+
+      // Guardar token y usuario en localStorage
       if (result.token) {
-        localStorage.setItem('authToken', result.token);
-        localStorage.setItem('user', JSON.stringify(result.user));
+        localStorage.setItem("authToken", result.token); // 👈 nombre correcto
+        localStorage.setItem("user", JSON.stringify(result.user));
+
+        console.log("🔑 Token guardado:", result.token);
       }
-      
+
+      // Esperar un momento para asegurar el guardado antes del redirect
+      setTimeout(() => {
+        alert("✅ " + result.message);
+        window.location.href = "dashboard.html";
+      }, 300);
+
       alert("✅ " + result.message);
       // Redirigir al dashboard
       window.location.href = "dashboard.html";
-
     } catch (error) {
       console.error("💥 Error:", error);
       alert("💥 Error de conexión con el servidor");
