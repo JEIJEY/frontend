@@ -93,8 +93,12 @@
             |-- _responsive.css
             |-- _spacing.css
         |-- index.css
+        |-- tailwind-output.css
+        |-- tailwind.css
 |-- .gitignore
 |-- estructura.txt
 |-- index.html
 |-- package-lock.json
 |-- package.json
+|-- postcss.config.js
+|-- tailwind.config.js
