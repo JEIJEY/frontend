@@ -1,3 +1,7 @@
+|-- [docs]
+    |-- AVANCE_TAXONOMIA.md
+    |-- KANBAN_TAXONOMIA.md
+    |-- PLAN_IMPLEMENTACION_TAXONOMIA_DINAMICA_CONTINUO.md
 |-- [src]
     |-- [assets]
         |-- [fonts]
@@ -33,11 +37,16 @@
         |-- [components]
             |-- logout-button.js
         |-- [dashboard]
+            |-- categorias.js
             |-- dashboard.js
             |-- inventario.js
+        |-- [utilities]
+            |-- apiClient.js
+            |-- EventBus.js
     |-- [pages]
         |-- [dashboard]
             |-- agregar-producto.html
+            |-- categorias.html
             |-- configuracion.html
             |-- inventario.html
             |-- reportes.html

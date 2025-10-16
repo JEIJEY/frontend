@@ -33,6 +33,13 @@ async function cargarSeccion(nombreSeccion) {
         import("./inventario.js").then(mod => mod.inicializarInventario());
         break;
 
+      // 🔹 NUEVO BLOQUE: soporte para Categorías (sin alterar nada más)
+      case "categorias":
+        import("./categorias.js").then(mod => {
+          if (mod.inicializarCategorias) mod.inicializarCategorias();
+        });
+        break;
+
       case "agregar-producto":
         // Si el módulo solo auto-ejecuta lógica al importarse y no expone funciones,
         // basta con importarlo (sin .then).
@@ -58,5 +65,17 @@ document.querySelectorAll(".sidebar-menu__link").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();                       // Evita que el <a> recargue la página.
     cargarSeccion(link.dataset.seccion);      // Usa el atributo data-seccion="..." del enlace.
+  });
+});
+
+
+// 5) Control visual del submenú de INVENTARIO (no afecta la carga de vistas)
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("inventarioToggle");
+  const item = toggle.closest(".sidebar-menu__item");
+
+  toggle.addEventListener("click", () => {
+    // Al hacer clic, alterna la clase "open"
+    item.classList.toggle("open");
   });
 });
