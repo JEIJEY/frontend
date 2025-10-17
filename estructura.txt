@@ -48,7 +48,8 @@
             |-- agregar-producto.html
             |-- categorias.html
             |-- configuracion.html
-            |-- inventario.html
+            |-- inventario_dashboard.html
+            |-- productos.html
             |-- reportes.html
             |-- usuarios.html
         |-- dashboard.html
