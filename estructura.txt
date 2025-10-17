@@ -49,7 +49,7 @@
             |-- categorias.html
             |-- configuracion.html
             |-- inventario_dashboard.html
-            |-- productos.html
+            |-- inventario.html
             |-- reportes.html
             |-- usuarios.html
         |-- dashboard.html
@@ -83,6 +83,7 @@
             |-- _social-links.css
             |-- _social-login.css
         |-- [organisms]
+            |-- _categorias.css
             |-- _dashboard-header.css
             |-- _dashboard-main.css
             |-- _dashboard-sidebar.css

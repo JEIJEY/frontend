@@ -41,6 +41,8 @@
 @import url("./organisms/_dashboard-header.css");
 @import url("./organisms/_dashboard-main.css");
 @import url("./organisms/_inventario.css");
+@import url("./organisms/_categorias.css");
+
 
 /* Utilities */
 @import url("./utilities/_grid.css");
@@ -48,11 +50,3 @@
 @import url("./utilities/_animations.css");
 @import url("./utilities/_responsive.css");
 
-/* ❌ ELIMINADOS - No existen:
-@import url('./molecules/_login-form.css');
-@import url("./organisms/_login-form.css");
-@import url("./organisms/_register-form.css");
-@import url("./templates/_landing-template.css");
-@import url("./templates/_auth-template.css");
-@import url("./templates/_dashboard-template.css");
-*/

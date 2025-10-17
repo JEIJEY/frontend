@@ -25,8 +25,8 @@
 |--------|---------|--------------------------|------------------|
 | Crear `categorias.html` base | 🟢 | Página creada en `/src/pages/dashboard/` con estructura inicial y header. | `init-categorias-html` |
 | Crear `categorias.js` vacío | 🟢 | Archivo módulo creado y vinculado al HTML. | `init-categorias-js` |
-| Configurar `EventBus.js` | 🟡 | Clase `EventBus` implementada en `/src/js/utils/` (emit/on). Falta probar eventos globales. | `feature-eventbus` |
-| Configurar conexión API | 🔴 | Pendiente creación de `apiClient.js` con wrapper `fetch`. | — |
+| Configurar `EventBus.js` | 🟢 | Clase `EventBus` implementada en `/src/js/utils/` (emit/on). Falta probar eventos globales. | `feature-eventbus` |
+| Configurar conexión API | 🟢 | Pendiente creación de `apiClient.js` con wrapper `fetch`. | — |
 
 ---
 

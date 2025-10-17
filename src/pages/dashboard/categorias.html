@@ -1,23 +1,17 @@
-<!-- ✅ /src/pages/dashboard/categorias.html -->
-<section class="categorias">
-  <h1 class="titulo">Gestión de Categorías</h1>
+<form id="formCategoria" class="categoria-form">
+  <label for="nombre" class="label">Nombre</label>
+  <input type="text" id="nombre" class="input" placeholder="Nombre de la categoría" required />
 
-  <!-- Formulario simple -->
-  <form id="formCategoria" class="categoria-form">
-    <input
-      type="text"
-      id="nombre"
-      placeholder="Nombre de la categoría"
-      required
-    />
-    <input
-      type="text"
-      id="descripcion"
-      placeholder="Descripción (opcional)"
-    />
-    <button type="submit">Agregar Categoría</button>
-  </form>
+  <label for="descripcion" class="label">Descripción</label>
+  <input type="text" id="descripcion" class="input" placeholder="Descripción (opcional)" />
 
-  <!-- Lista -->
-  <ul id="listaCategorias" class="categoria-lista"></ul>
-</section>
+  <button type="submit" class="btn btn--primary">Agregar Categoría</button>
+</form>
+
+<!-- ✅ AGREGAR ESTA LISTA -->
+<div class="categorias-container">
+  <h2>Categorías Existentes</h2>
+  <ul id="listaCategorias" class="categoria-lista">
+    <!-- Las categorías se cargarán aquí dinámicamente -->
+  </ul>
+</div>
