@@ -1,13 +1,13 @@
-import { api } from "../utilities/apiClient.js";
-import { appEvents } from "../utilities/EventBus.js";
-
+// ✅ Importaciones correctas
+import apiClient from "../utilities/apiClient.js";
+import { appEvents } from "../utilities/EventBus.js"; // 🔥 Cambiar a { appEvents }
 
 const form = document.getElementById("formCategoria");
 const lista = document.getElementById("listaCategorias");
 
 async function cargarCategorias() {
   try {
-    const categorias = await api.get("/categorias");
+    const categorias = await apiClient.getCategorias(); // ✅ usamos el método de la clase
     lista.innerHTML = "";
     categorias.forEach(cat => {
       const li = document.createElement("li");
@@ -15,7 +15,7 @@ async function cargarCategorias() {
       lista.appendChild(li);
     });
   } catch (err) {
-    console.error("Error cargando categorías:", err);
+    console.error("❌ Error cargando categorías:", err);
   }
 }
 
@@ -26,12 +26,12 @@ form.addEventListener("submit", async (e) => {
   if (!nombre) return;
 
   try {
-    await api.post("/categorias", { nombre, descripcion });
+    await apiClient.post("/categorias", { nombre, descripcion }); // ✅ usa apiClient
     form.reset();
     await cargarCategorias();
     appEvents.emit("categorias:actualizadas");
   } catch (err) {
-    console.error("Error creando categoría:", err);
+    console.error("❌ Error creando categoría:", err);
   }
 });
 

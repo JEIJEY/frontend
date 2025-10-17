@@ -1,4 +1,4 @@
-/* =========== IMPORTS ATOMIC DESIGN =========== */
+/* =========== IMPORTS ATOMIC DESIGN CORREGIDOS =========== */
 
 /* Base */
 @import url("./base/_reset.css");
@@ -14,6 +14,7 @@
 @import url("./atoms/_links.css");
 @import url("./atoms/_icons.css");
 @import url("./atoms/_logout-button.css");
+@import url("./atoms/_headings.css");
 
 /* Molecules */
 @import url("./molecules/_cards.css");
@@ -22,12 +23,10 @@
 @import url("./molecules/_product-cards.css");
 @import url("./molecules/_list-items.css");
 @import url("./molecules/_social-links.css");
-@import url('./molecules/_login-form.css');
-@import url('./molecules/_social-login.css');
-@import url('./molecules/_logo.css');
-@import url('./molecules/_separator.css');
-@import url('./molecules/_login-footer.css');
-@import url('./atoms/_headings.css');
+@import url("./molecules/_social-login.css");
+@import url("./molecules/_logo.css");
+@import url("./molecules/_separator.css");
+@import url("./molecules/_login-footer.css");
 
 /* Organisms */
 @import url("./organisms/_header.css");
@@ -35,21 +34,13 @@
 @import url("./organisms/_hero.css");
 @import url("./organisms/_products-grid.css");
 @import url("./organisms/_promo-section.css");
-@import url("./organisms/_login-form.css");
-@import url("./organisms/_register-form.css");
-@import url("./organisms/_redirect-screen.css"); 
-@import url('./organisms/_login-card.css');
+@import url("./organisms/_login-card.css");
+@import url("./organisms/_redirect-screen.css");
 @import url("./organisms/_dashboard.css");
 @import url("./organisms/_dashboard-sidebar.css");
 @import url("./organisms/_dashboard-header.css");
 @import url("./organisms/_dashboard-main.css");
 @import url("./organisms/_inventario.css");
-
-
-/* Templates */
-@import url("./templates/_landing-template.css");
-@import url("./templates/_auth-template.css");
-@import url("./templates/_dashboard-template.css");
 
 /* Utilities */
 @import url("./utilities/_grid.css");
@@ -57,4 +48,11 @@
 @import url("./utilities/_animations.css");
 @import url("./utilities/_responsive.css");
 
-
+/* ❌ ELIMINADOS - No existen:
+@import url('./molecules/_login-form.css');
+@import url("./organisms/_login-form.css");
+@import url("./organisms/_register-form.css");
+@import url("./templates/_landing-template.css");
+@import url("./templates/_auth-template.css");
+@import url("./templates/_dashboard-template.css");
+*/
