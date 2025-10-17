@@ -34,9 +34,9 @@
 
 | Tarea | Estado | Detalle Técnico / Notas | Commit Asociado |
 |--------|---------|--------------------------|------------------|
-| Modelo `Categoria` y endpoints CRUD | 🔴 | Aún no implementado. Plan: usar Express + MySQL. | — |
-| Formulario básico (nombre + descripción) | 🔴 | Pendiente estructura `<form>` y evento submit. | — |
-| Listado plano de categorías (`ul > li`) | 🔴 | Requiere datos del endpoint `/api/categorias`. | — |
+| Modelo `Categoria` y endpoints CRUD | 🟢 | Aún no implementado. Plan: usar Express + MySQL. | — |
+| Formulario básico (nombre + descripción) | 🟢 | Pendiente estructura `<form>` y evento submit. | — |
+| Listado plano de categorías (`ul > li`) | 🟢 | Requiere datos del endpoint `/api/categorias`. | — |
 | Integración con inventario (`EventBus`) | 🔴 | Pendiente prueba de comunicación entre módulos. | — |
 
 🧠 **Notas:**  
