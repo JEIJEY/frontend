@@ -1,0 +1,44 @@
+<!-- 🔹 SECCIÓN PRINCIPAL DEL INVENTARIO -->
+<section class="inventario">
+  
+  <!-- 🔸 Encabezado del inventario -->
+  <header class="inventario__header">
+    <!-- Título principal de la sección -->
+    <h1>📦 Inventario de productos</h1>
+
+    <!-- Botón para recargar la lista de productos desde JavaScript -->
+    <button id="btnRecargar" class="btn btn-primary">🔄 Recargar lista</button>
+  </header>
+
+  <!-- 🔸 Tabla donde se mostrarán los productos -->
+  <table class="inventario__tabla">
+
+    <!-- Encabezado de la tabla (nombres de las columnas) -->
+    <thead>
+      <tr>
+        <th>ID</th>             <!-- Identificador del producto -->
+        <th>Nombre</th>         <!-- Nombre del producto -->
+        <th>Descripción</th>    <!-- Detalle o información adicional -->
+        <th>Stock</th>          <!-- Cantidad disponible -->
+        <th>Unidad</th>         <!-- Unidad de medida (ejemplo: kg, unidades) -->
+        <th>Precio</th>         <!-- Precio del producto -->
+        <th>Categoría</th>      <!-- Tipo o grupo al que pertenece -->
+        <th>Proveedor</th>      <!-- Nombre del proveedor -->
+      </tr>
+    </thead>
+
+    <!-- Cuerpo de la tabla donde se insertarán dinámicamente los productos -->
+    <tbody id="tablaProductos">
+      <!-- Este comentario recuerda que las filas serán generadas desde JavaScript -->
+      <!-- Por ejemplo: <tr><td>1</td><td>Arroz</td>...</tr> -->
+    </tbody>
+  </table>
+
+  <!-- 🔸 Párrafo para mostrar mensajes de estado -->
+  <!-- Ejemplo: “Cargando productos...” o “Error al obtener datos” -->
+  <p id="estadoCarga" class="inventario__estado"></p>
+</section>
+
+<!-- 🔹 Script que maneja toda la lógica del inventario (carga de datos, eventos, etc.) -->
+<script type="module" src="../../js/dashboard/productos.js"></script>
+

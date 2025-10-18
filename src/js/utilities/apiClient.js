@@ -31,7 +31,6 @@ class ApiClient {
                 throw new Error(errorData?.message || `HTTP error! status: ${response.status}`);
             }
 
-            // Manejar respuestas vacías (como en DELETE)
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('application/json')) {
                 return await response.json();
@@ -45,7 +44,10 @@ class ApiClient {
         }
     }
 
-    // Métodos específicos para categorías (según tu backend)
+    // ======================
+    // 🟦 CATEGORÍAS
+    // ======================
+
     async getCategorias() {
         return this.request('/categorias');
     }
@@ -74,7 +76,15 @@ class ApiClient {
         });
     }
 
-    // Métodos genéricos
+    // ✅ NUEVO: obtener jerarquía completa (una sola llamada)
+    async getJerarquiaCategorias() {
+        return this.request('/categorias/jerarquia');
+    }
+
+    // ======================
+    // 🌐 GENÉRICOS
+    // ======================
+
     get(endpoint) {
         return this.request(endpoint, { method: 'GET' });
     }
@@ -92,6 +102,6 @@ class ApiClient {
     }
 }
 
-// Instancia global para usar en toda la aplicación
+// ✅ Instancia global para toda la app
 const apiClient = new ApiClient();
 export default apiClient;

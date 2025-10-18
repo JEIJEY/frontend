@@ -1,17 +1,82 @@
-<form id="formCategoria" class="categoria-form">
-  <label for="nombre" class="label">Nombre</label>
-  <input type="text" id="nombre" class="input" placeholder="Nombre de la categoría" required />
+<!-- 🎯 VISTA PRINCIPAL CON TRES MODOS -->
+<div id="modoCategorias">
 
-  <label for="descripcion" class="label">Descripción</label>
-  <input type="text" id="descripcion" class="input" placeholder="Descripción (opcional)" />
+  <!-- 🧱 MODO CRUD (Lista principal) -->
+  <div id="vistaRaiz" class="vista-raiz">
+    <!-- 📋 FORMULARIO DE NUEVA CATEGORÍA -->
+    <form id="formCategoria" class="categoria-form">
+      <label for="nombre" class="label">Nombre</label>
+      <input type="text" id="nombre" class="input" placeholder="Nombre de la categoría" required />
 
-  <button type="submit" class="btn btn--primary">Agregar Categoría</button>
-</form>
+      <label for="descripcion" class="label">Descripción</label>
+      <input type="text" id="descripcion" class="input" placeholder="Descripción (opcional)" />
 
-<!-- ✅ AGREGAR ESTA LISTA -->
-<div class="categorias-container">
-  <h2>Categorías Existentes</h2>
-  <ul id="listaCategorias" class="categoria-lista">
-    <!-- Las categorías se cargarán aquí dinámicamente -->
-  </ul>
+      <button type="submit" class="btn btn--primary">Agregar Categoría</button>
+    </form>
+
+    <!-- ✅ LISTADO DE TARJETAS -->
+    <div class="categorias-container">
+      <h2>Categorías</h2>
+      <ul id="listaCategorias" class="grid-categorias">
+        <!-- Se llenan dinámicamente -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- 🔍 MODO DETALLE (Vista individual de una categoría) -->
+  <div id="vistaDetalle" class="vista-detalle" style="display: none;">
+    <header class="detalle-header">
+      <button class="btn-volver" onclick="volverALista()">⬅ Volver a la lista</button>
+      <h2 id="detalleTitulo">Detalle de Categoría</h2>
+    </header>
+
+    <div class="detalle-content">
+      <div class="detalle-info">
+        <h3 id="detalleNombre"></h3>
+        <p id="detalleDescripcion"></p>
+        <div class="detalle-stats">
+          <span class="stat">Subcategorías: <strong id="detalleSubcount">0</strong></span>
+          <span class="stat">Productos: <strong id="detalleProductos">0</strong></span>
+        </div>
+      </div>
+
+      <!-- 🎯 SECCIÓN DE SUBCATEGORÍAS -->
+      <div class="seccion-subcategorias">
+        <div class="seccion-header">
+          <h4>Subcategorías</h4>
+          <button class="btn-small" onclick="crearSubcategoriaEnDetalle()">➕ Nueva Subcategoría</button>
+        </div>
+        <div id="listaSubcategorias" class="grid-categorias">
+          <!-- Subcategorías se cargarán aquí -->
+        </div>
+      </div>
+
+      <!-- 🎯 SECCIÓN DE PRODUCTOS -->
+      <div class="seccion-productos">
+        <h4>Productos en esta categoría</h4>
+        <div id="listaProductos" class="grid-productos">
+          <!-- Productos se cargarán aquí -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🧭 MODO NAVEGACIÓN (Niveles > 0) -->
+  <div id="vistaNavegacion" class="vista-navegacion" style="display: none;">
+    <header class="categorias__header">
+      <!-- Breadcrumbs -->
+      <nav id="breadcrumbs" class="breadcrumbs"></nav>
+      <!-- Botón Volver -->
+      <button id="btnVolver" class="btn-volver" disabled>⬅ Volver</button>
+    </header>
+
+    <!-- 📦 Vista dinámica de subcategorías o productos -->
+    <main id="vistaCategorias" class="categorias__main">
+      <!-- Render dinámico controlado por navegacion-categorias.js -->
+    </main>
+  </div>
 </div>
+
+<!-- 🔗 MÓDULOS DE CATEGORÍAS -->
+<script type="module" src="/src/js/dashboard/categorias.js"></script>
+<!-- ❌ ELIMINAR: <script type="module" src="/src/js/dashboard/productos-vista.js"></script> -->

@@ -1,6 +1,7 @@
 |-- [docs]
     |-- AVANCE_TAXONOMIA.md
     |-- KANBAN_TAXONOMIA.md
+    |-- PLAN_ATAQUE_FASE2.md
     |-- PLAN_IMPLEMENTACION_TAXONOMIA_DINAMICA_CONTINUO.md
 |-- [src]
     |-- [assets]
@@ -40,6 +41,8 @@
             |-- categorias.js
             |-- dashboard.js
             |-- inventario.js
+            |-- navegacion-categorias.js
+            |-- productos-vista.js
         |-- [utilities]
             |-- apiClient.js
             |-- EventBus.js
@@ -49,7 +52,7 @@
             |-- categorias.html
             |-- configuracion.html
             |-- inventario_dashboard.html
-            |-- inventario.html
+            |-- productos.html
             |-- reportes.html
             |-- usuarios.html
         |-- dashboard.html
