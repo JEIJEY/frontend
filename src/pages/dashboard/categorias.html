@@ -1,0 +1,176 @@
+<!-- ======================================================
+     🎯 VISTA PRINCIPAL CON TRES MODOS
+====================================================== -->
+<div id="modoCategorias">
+
+  <!-- 🧱 MODO CRUD (Lista principal) -->
+  <div id="vistaRaiz" class="vista-raiz">
+    <!-- 📋 FORMULARIO DE NUEVA CATEGORÍA -->
+    <form id="formCategoria" class="categoria-form">
+      <label for="nombre" class="label">Nombre</label>
+      <input type="text" id="nombre" class="input" placeholder="Nombre de la categoría" required />
+
+      <label for="descripcion" class="label">Descripción</label>
+      <input type="text" id="descripcion" class="input" placeholder="Descripción (opcional)" />
+
+      <button type="submit" class="btn btn--primary">Agregar Categoría</button>
+    </form>
+
+    <!-- ✅ LISTADO DE TARJETAS -->
+    <div class="categorias-container">
+      <h2>Categorías</h2>
+      <ul id="listaCategorias" class="grid-categorias">
+        <!-- Se llenan dinámicamente -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- 🔍 MODO DETALLE (Vista individual de una categoría) -->
+  <div id="vistaDetalle" class="vista-detalle" style="display: none;">
+    <header class="detalle-header">
+      <button class="btn-volver" onclick="volverALista()">⬅ Volver a la lista</button>
+      <h2 id="detalleTitulo">Detalle de Categoría</h2>
+    </header>
+
+    <div class="detalle-content">
+      <div class="detalle-info">
+        <h3 id="detalleNombre"></h3>
+        <p id="detalleDescripcion"></p>
+        <div class="detalle-stats">
+          <span class="stat">Subcategorías: <strong id="detalleSubcount">0</strong></span>
+          <span class="stat">Productos: <strong id="detalleProductos">0</strong></span>
+        </div>
+      </div>
+
+      <!-- 🎯 SECCIÓN DE SUBCATEGORÍAS -->
+      <div class="seccion-subcategorias">
+        <div class="seccion-header">
+          <h4>Subcategorías</h4>
+          <button class="btn-small" onclick="crearSubcategoriaEnDetalle()">➕ Nueva Subcategoría</button>
+        </div>
+        <div id="listaSubcategorias" class="grid-categorias">
+          <!-- Subcategorías se cargarán aquí -->
+        </div>
+      </div>
+
+      <!-- 🎯 SECCIÓN DE PRODUCTOS -->
+      <div class="seccion-productos">
+        <div class="seccion-header">
+          <h4>Productos en esta categoría</h4>
+          <!-- 🔹 NUEVO BOTÓN: abrir modal de productos -->
+          <button class="btn-small btn--primary"
+            onclick="mostrarModalProducto(window.categoriaActualId, document.getElementById('detalleNombre').textContent)">
+            ➕ Agregar Producto
+          </button>
+        </div>
+
+        <div id="listaProductos" class="grid-productos">
+          <!-- Productos se cargarán aquí -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🧭 MODO NAVEGACIÓN (Niveles > 0) -->
+  <div id="vistaNavegacion" class="vista-navegacion" style="display: none;">
+    <header class="categorias__header">
+      <!-- Breadcrumbs -->
+      <nav id="breadcrumbs" class="breadcrumbs"></nav>
+      <!-- Botón Volver -->
+      <button id="btnVolver" class="btn-volver" disabled>⬅ Volver</button>
+    </header>
+
+    <!-- 📦 Vista dinámica de subcategorías o productos -->
+    <main id="vistaCategorias" class="categorias__main">
+      <!-- Render dinámico controlado por navegacion-categorias.js -->
+    </main>
+  </div>
+</div>
+
+<!-- ======================================================
+     🧩 MODAL: AGREGAR PRODUCTO A CATEGORÍA (MEJORADO)
+====================================================== -->
+<div id="modalProducto" class="modal" style="display: none;" role="dialog" aria-labelledby="modalTitulo" aria-modal="true">
+  <div class="modal-content">
+    <span class="close-modal" onclick="cerrarModalProducto()" aria-label="Cerrar modal">&times;</span>
+
+    <h2 id="modalTitulo">🆕 Agregar Producto a <span id="modalCategoriaNombre"></span></h2>
+
+    <form id="formProducto" class="producto-form" novalidate>
+      <input type="hidden" id="modalCategoriaId">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productoNombre">Nombre del Producto *</label>
+          <input type="text" id="productoNombre" required placeholder="Ej: Gaseosa Coca-Cola 500ml">
+        </div>
+
+        <div class="form-group">
+          <label for="productoDescripcion">Descripción</label>
+          <textarea id="productoDescripcion" placeholder="Descripción opcional" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productoPrecio">Precio Unitario *</label>
+          <input type="number" id="productoPrecio" step="0.01" min="0" required placeholder="0.00">
+        </div>
+
+        <div class="form-group">
+          <label for="productoStock">Cantidad / Stock *</label>
+          <input type="number" id="productoStock" min="1" value="1" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productoUnidad">Unidad de Medida *</label>
+          <select id="productoUnidad" required>
+            <option value="">Seleccionar...</option>
+            <option value="unidad">Unidad</option>
+            <option value="litro">Litro</option>
+            <option value="kg">Kilogramo</option>
+            <option value="paquete">Paquete</option>
+            <option value="caja">Caja</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="productoMarca">Marca</label>
+          <select id="productoMarca">
+            <option value="">Sin marca</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productoProveedor">Proveedor</label>
+          <select id="productoProveedor">
+            <option value="">Sin proveedor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="productoEstado">Estado</label>
+          <select id="productoEstado">
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn--secondary" onclick="cerrarModalProducto()">Cancelar</button>
+        <button type="submit" class="btn btn--primary">➕ Agregar Producto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================
+     🔗 MÓDULOS DE CATEGORÍAS
+====================================================== -->
+<script type="module" src="/src/js/dashboard/categorias.js"></script>
+<!-- ❌ ELIMINAR: <script type="module" src="/src/js/dashboard/productos-vista.js"></script> -->

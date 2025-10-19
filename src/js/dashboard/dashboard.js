@@ -1,67 +1,129 @@
-// ============================================================
-// DASHBOARD PRINCIPAL - CARGA DE VISTAS DINÁMICAS
-// ============================================================
+// ======================================================
+// DASHBOARD.JS
+// Controlador principal de vistas dinámicas del panel
+// ======================================================
 
-// 1️⃣ Tomamos la referencia al contenedor principal donde se inyectarán las vistas del dashboard.
+// 1️⃣ Tomamos referencia al contenedor principal del dashboard.
 const main = document.querySelector(".dashboard-main");
 
+import {
+  toggleGrilla,
+  crearGrillaExacta,
+  observarRedimensionamiento,
+} from "../utilities/debugGrid.js";
 
-// 2️⃣ Función asíncrona que carga una sección HTML dentro de <main> y, si aplica,
-//     importa el JS específico de esa sección (carga bajo demanda = mejor rendimiento).
+// ======================================================
+// 🔧 Función para cargar secciones dinámicamente
+// ======================================================
 async function cargarSeccion(nombreSeccion) {
   try {
-    // 2.1) Pedimos el fragmento HTML de la sección (por ejemplo: ./dashboard/inventario.html).
-    const res = await fetch(`./dashboard/${nombreSeccion}.html`);
+    // ✅ Si el nombre es "inventario", cargamos inventario_dashboard.html
+    const archivo =
+      nombreSeccion === "inventario" ? "inventario_dashboard" : nombreSeccion;
 
-    // 2.2) Si el servidor responde pero con error HTTP (404, 500, etc.), lanzamos una excepción propia.
-    if (!res.ok) throw new Error(`No se encontró ${nombreSeccion}.html`);
-
-    // 2.3) Convertimos la respuesta en texto (el HTML de la sección).
+    const res = await fetch(`./dashboard/${archivo}.html`);
+    if (!res.ok) throw new Error(`No se encontró ${archivo}.html`);
     const html = await res.text();
-
-    // 2.4) Inyectamos el HTML en el contenedor principal del dashboard.
     main.innerHTML = html;
 
-    // 2.5) Pequeña pausa para asegurar que el DOM insertado esté disponible
-    //      antes de inicializar el JS específico de la sección.
-    await new Promise(r => setTimeout(r, 50));
+    // Esperamos un poco para que el DOM cargue correctamente
+    await new Promise((r) => setTimeout(r, 50));
 
-    // 2.6) Según la sección pedida, cargamos dinámicamente el módulo JS correspondiente.
+    // Carga dinámica del módulo JS correspondiente
     switch (nombreSeccion) {
       case "inventario":
-        // import(...) devuelve una promesa con el "namespace" del módulo.
-        import("./inventario.js").then(mod => mod.inicializarInventario());
+        await cargarVistaHTML("inventario_dashboard");
+        import("../../js/dashboard/inventario.js").then((mod) =>
+          mod.inicializarInventario?.()
+        );
+        // ❌ Ya no se crea ni muestra automáticamente la grilla
+        // ✅ Solo se prepara el observador (por si se activa después)
+        observarRedimensionamiento();
+        break;
+        
+
+      case "productos":
+        import("../../js/dashboard/inventario.js").then((mod) =>
+          mod.inicializarInventario?.()
+        );
+        break;
+
+      case "categorias":
+        import("../../js/dashboard/categorias.js").then((mod) =>
+          mod.inicializarCategorias?.()
+        );
         break;
 
       case "agregar-producto":
-        // Si el módulo solo auto-ejecuta lógica al importarse y no expone funciones,
-        import("./agregar-producto.js");
+        import("../../js/dashboard/agregar-producto.js");
+        break;
+
+      case "usuarios":
+        console.log("👥 Módulo usuarios cargado");
+        break;
+
+      case "reportes":
+        console.log("📊 Módulo reportes cargado");
         break;
 
       case "configuracion":
-        // ✅ Cargar la vista de configuración con Tailwind dentro de un iframe aislado.
-        import("./configuracion.js").then(mod => mod.inicializarConfiguracion());
+        console.log("⚙️ Módulo configuración cargado");
         break;
     }
-
   } catch (err) {
-    // 2.7) Si algo falla (fetch, import, etc.), lo registramos y mostramos un mensaje en pantalla.
     console.error("❌ Error al cargar sección:", err);
-    main.innerHTML = `<p style="color:red; text-align:center;">Error al cargar ${nombreSeccion}</p>`;
+    main.innerHTML = `<p>Error al cargar ${nombreSeccion}</p>`;
   }
 }
 
+// ======================================================
+// 🔧 Función auxiliar: carga vistas estáticas simples
+// ======================================================
+async function cargarVistaHTML(nombreArchivo) {
+  try {
+    const res = await fetch(`./dashboard/${nombreArchivo}.html`);
+    if (!res.ok) throw new Error(`No se encontró ${nombreArchivo}.html`);
+    const html = await res.text();
+    main.innerHTML = html;
+  } catch (err) {
+    console.error("❌ Error al cargar vista estática:", err);
+  }
+}
 
-// 3️⃣ Cargamos por defecto la sección "inventario" al iniciar la app.
-cargarSeccion("inventario");
+// ======================================================
+// 🚀 Carga inicial del dashboard (por defecto inventario)
+// ======================================================
+cargarVistaHTML("inventario_dashboard");
 
-
-// 4️⃣ Activamos la navegación del sidebar:
-//     por cada enlace con .sidebar-menu__link prevenimos la navegación estándar
-//     y llamamos a cargarSeccion() con su data-seccion.
-document.querySelectorAll(".sidebar-menu__link").forEach(link => {
-  link.addEventListener("click", e => {
-    e.preventDefault(); // Evita que el <a> recargue la página.
-    cargarSeccion(link.dataset.seccion); // Usa el atributo data-seccion="..." del enlace.
+// ======================================================
+// 🧭 Enlaces del sidebar (navegación sin recargar la página)
+// ======================================================
+document.querySelectorAll(".sidebar-menu__link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const seccion = link.dataset.seccion;
+    if (seccion) cargarSeccion(seccion);
   });
+});
+
+// ======================================================
+// 📂 Control visual del submenú (Inventario desplegable)
+// ======================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("inventarioToggle");
+  if (!toggle) return;
+  const item = toggle.closest(".sidebar-menu__item");
+
+  toggle.addEventListener("click", () => {
+    item.classList.toggle("open");
+  });
+});
+
+// ======================================================
+// 🎹 OPCIONAL: Atajo de teclado "G" para alternar la grilla
+// ======================================================
+document.addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() === "g") {
+    toggleGrilla();
+  }
 });

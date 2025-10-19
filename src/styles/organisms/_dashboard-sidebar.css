@@ -1,52 +1,72 @@
-/* ============ SIDEBAR GENERAL ============ */
-
+/* ======================================================
+   🎨 SIDEBAR GENERAL (sin clip-path, diseño moderno)
+====================================================== */
 
 .dashboard-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
   grid-area: sidebar;
-  width: 350px;
-  height: max(770px, 100vh);
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 320px;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 20, 0.8),
+    rgba(0, 0, 0, 0.6)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.35);
   padding: 30px 20px;
-  clip-path: path("M 0,0 L 200,0 A 20,20 0,0,1 215,15 L 215,135 A 20,20 0,0,0 230,150 L 300,150 A 20,20 0,0,1 315,165 L 315,615 A 20,20 0,0,1 300,630 L 230,630 A 20,20 0,0,0 215,650 L 215,750 A 20,20 0,0,1 200,770 L 0,770 L 0,0 Z");
-  position: relative;
-  top: -60px;
+  border-radius: 0 25px 25px 0;
   color: #ecf0f1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  overflow: hidden;
+  overflow: visible; /* deja ver submenús flotantes */
+  z-index: 200;
+  transition: all 0.3s ease-in-out;
 }
 
-/* ============ CONTENIDO INTERIOR ============ */
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ============ PERFIL ============ */
+/* ======================================================
+   📸 PERFIL DE USUARIO
+====================================================== */
 .sidebar-profile {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  gap: 10px;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-profile__img {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #1abc9c;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar-profile__info {
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  color: #e0e0e0;
 }
 
-/* ============ MENÚ ============ */
+.sidebar-profile__info .sidebar-profile__name {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ======================================================
+   🧭 MENÚ PRINCIPAL
+====================================================== */
 .sidebar-menu {
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 .sidebar-menu__list {
@@ -56,47 +76,111 @@
 }
 
 .sidebar-menu__item {
+  position: relative;
   margin-bottom: 12px;
 }
 
 .sidebar-menu__link {
-  display: block;
-  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
   text-decoration: none;
-  color: #ecf0f1;
-  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
   font-weight: 500;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .sidebar-menu__item.active .sidebar-menu__link,
 .sidebar-menu__link:hover {
-  background-color: #1abc9c;
+  background: rgba(26, 188, 156, 0.25);
   color: #ffffff;
+  transform: translateX(4px);
 }
 
-/* ============ FOOTER ============ */
+/* ======================================================
+   ⚙️ SUBMENÚ SUPERPUESTO (INVENTARIO)
+====================================================== */
+
+.sidebar-menu__item.has-submenu {
+  position: relative;
+}
+
+.sidebar-submenu {
+  list-style: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 10px;
+  padding: 8px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  min-width: 220px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 9999;
+}
+
+.sidebar-menu__item.open .sidebar-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.sidebar-submenu li a {
+  display: block;
+  padding: 8px 16px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-submenu li a:hover {
+  background: rgba(26, 188, 156, 0.25);
+  color: #fff;
+}
+
+/* Flecha ▼ */
+.sidebar-menu__link .arrow {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-menu__item.open .arrow {
+  transform: rotate(180deg);
+}
+
+/* ======================================================
+   🦶 FOOTER DEL SIDEBAR
+====================================================== */
 .sidebar-footer {
   margin-top: auto;
-  margin-bottom: 300px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  flex-direction: row;
-  gap: 5px;
-  padding-top: -20px;
+  justify-content: center;
+  align-items: center;
 }
 
-
-
-/* ============ MEDIA QUERIES ============ */
+/* ======================================================
+   📱 MEDIA QUERIES
+====================================================== */
 @media (max-height: 800px) {
   .sidebar-footer {
     position: relative;
-    bottom: -100px;
+    bottom: -60px;
   }
 }
 
-/* ============ ANCHOS INDIVIDUALES ============ */
-/* Menú */
+/* ======================================================
+   📏 ANCHOS INDIVIDUALES
+====================================================== */
 .sidebar-menu__item:nth-child(1) .sidebar-menu__link,
 .sidebar-menu__item:nth-child(2) .sidebar-menu__link,
 .sidebar-menu__item:nth-child(3) .sidebar-menu__link,
@@ -105,14 +189,7 @@
   width: 220px;
 }
 
-/* Footer */
 .sidebar-footer__link:nth-child(1),
 .sidebar-footer__link:nth-child(2) {
   width: 100px;
 }
-
-
-
-
-
-

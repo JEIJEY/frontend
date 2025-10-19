@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <meta http-equiv="Permissions-Policy" content="unload=(self)">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - La Rivera</title>
@@ -10,7 +11,6 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&display=swap"
     />
-
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
@@ -45,44 +45,69 @@
         <!-- MENÚ PRINCIPAL -->
         <nav class="sidebar-menu">
           <ul class="sidebar-menu__list">
-            <li class="sidebar-menu__item active">
-              <a
-                href="./dashboard/inventario.html"
+            <!-- MÓDULO INVENTARIO -->
+            <li class="sidebar-menu__item has-submenu">
+              <button
                 class="sidebar-menu__link"
+                id="inventarioToggle"
                 data-seccion="inventario"
               >
                 📦 Inventario
-              </a>
-            </li>
-            <li class="sidebar-menu__item">
-              <a
-                href="./dashboard/agregar-producto.html"
-                class="sidebar-menu__link"
-                data-seccion="agregar-producto"
-              >
-                ➕ Movimientos
-              </a>
-            </li>
-            <li class="sidebar-menu__item">
-              <a
-                href="./dashboard/usuarios.html"
-                class="sidebar-menu__link"
-                data-seccion="usuarios"
-              >
-                👥 Usuarios
-                <li class="sidebar-menu__item">
+                <span class="arrow">▼</span>
+              </button>
+
+              <ul class="sidebar-submenu" id="inventarioSubmenu">
+                <!-- 📋 Submódulo Productos -->
+                <li>
                   <a
-                    href="./dashboard/reportes.html"
+                    href="#"
                     class="sidebar-menu__link"
-                    data-seccion="reportes"
-                  />
-                  > 📊 Reportes
-                </li></a
-              >
+                    data-seccion="productos"
+                  >
+                    📋 Productos
+                  </a>
+                </li>
+
+                <!-- 🗂️ Submódulo Categorías -->
+                <li>
+                  <a
+                    href="#"
+                    class="sidebar-menu__link"
+                    data-seccion="categorias"
+                  >
+                    🗂️ Categorías
+                  </a>
+                </li>
+
+                <!-- ➕ Submódulo Movimientos -->
+                <li>
+                  <a
+                    href="#"
+                    class="sidebar-menu__link"
+                    data-seccion="agregar-producto"
+                  >
+                    ➕ Movimientos
+                  </a>
+                </li>
+              </ul>
             </li>
+
+            <!-- OTROS MÓDULOS -->
+            <li class="sidebar-menu__item">
+              <a href="#" class="sidebar-menu__link" data-seccion="usuarios">
+                👥 Usuarios
+              </a>
+            </li>
+
+            <li class="sidebar-menu__item">
+              <a href="#" class="sidebar-menu__link" data-seccion="reportes">
+                📊 Reportes
+              </a>
+            </li>
+
             <li class="sidebar-menu__item">
               <a
-                href="./dashboard/configuracion.html"
+                href="#"
                 class="sidebar-menu__link"
                 data-seccion="configuracion"
               >
@@ -177,9 +202,7 @@
       <!-- ==========================
            MAIN CONTENT
       =========================== -->
-      <main class="dashboard-main">
-        <h1 class="dashboard-main__title">Dashboard</h1>
-      </main>
+      <main class="dashboard-main"></main>
     </div>
 
     <!-- Scripts -->
