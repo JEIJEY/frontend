@@ -81,4 +81,21 @@
   color: #333;
 }
 
+.dashboard-main {
+  position: relative;
+  min-height: 100vh; /* que tenga altura completa visible */
+  background-color: white; /* para que contraste con la grilla */
+  overflow: visible;
+}
 
+/* ==============================================
+   📐 Contenedor principal del área de trabajo
+   ============================================== */
+.dashboard-main {
+  position: relative;
+  width: 100%;
+  height: 100%;          /* 🔹 toma el alto del grid-container */
+  min-height: calc(100vh - 80px); /* 🔹 ajusta si tu header ocupa algo */
+  background-color: #fff;
+  overflow: visible;       /* evita que la grilla se salga del borde */
+}

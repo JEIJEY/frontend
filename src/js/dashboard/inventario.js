@@ -1,21 +1,94 @@
-// ✅ Confirmar carga del archivo
+// ======================================================
+// INVENTARIO.JS — Control unificado para Inventario y Productos
+// ======================================================
+
 console.log("✅ inventario.js cargado correctamente");
 
-// ============================================
+// ======================================================
 // 🚀 FUNCIÓN PRINCIPAL DEL INVENTARIO
-// ============================================
-export function inicializarInventario() {
+// ======================================================
+export async function inicializarInventario() {
+  console.log("⏳ Esperando a que cargue la vista del módulo...");
+
+  try {
+    // Detectar si es vista INVENTARIO (dashboard tarjetas) o PRODUCTOS (tabla)
+    await esperarElemento(".invp-dashboard, #tablaProductos");
+
+    if (document.querySelector(".invp-dashboard")) {
+      console.log("🎯 Vista: DASHBOARD DE INVENTARIO detectada");
+      inicializarInterfazInventario();
+    } else if (document.querySelector("#tablaProductos")) {
+      console.log("🎯 Vista: PRODUCTOS detectada");
+      inicializarProductos();
+    } else {
+      console.warn("⚠️ Ninguna vista compatible detectada");
+    }
+  } catch (err) {
+    console.warn("⚠️ Elementos del DOM no encontrados:", err);
+  }
+}
+
+// ======================================================
+// 🕓 FUNCIÓN PARA ESPERAR ELEMENTOS DINÁMICOS
+// ======================================================
+function esperarElemento(selector, timeout = 4000) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(selector)) return resolve();
+
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(selector)) {
+        observer.disconnect();
+        resolve();
+      }
+    });
+
+    observer.observe(document.querySelector(".dashboard-main"), {
+      childList: true,
+      subtree: true,
+    });
+
+    setTimeout(() => {
+      observer.disconnect();
+      reject(`⛔ Timeout esperando ${selector}`);
+    }, timeout);
+  });
+}
+
+// ======================================================
+// 📦 DASHBOARD DE INVENTARIO (tarjetas invp-*)
+// ======================================================
+function inicializarInterfazInventario() {
+  const contenedor = document.querySelector(".invp-dashboard");
+  if (!contenedor) return;
+
+  console.log("✅ Inventario Dashboard listo para usar");
+
+  const botones = contenedor.querySelectorAll(".invp-btn");
+  botones.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      console.log(`🪄 Click en botón: ${btn.textContent.trim()}`);
+      alert(`Has presionado: ${btn.textContent.trim()}`);
+    });
+  });
+}
+
+// ======================================================
+// 💾 LÓGICA DE PRODUCTOS (tabla y fetch API)
+// ======================================================
+function inicializarProductos() {
   const tabla = document.getElementById("tablaProductos");
   const estado = document.getElementById("estadoCarga");
   const btnRecargar = document.getElementById("btnRecargar");
 
   if (!tabla || !estado) {
-    console.warn("⚠️ Elementos del DOM no encontrados todavía");
+    console.warn("⚠️ Elementos del DOM de productos no encontrados todavía");
     return;
   }
 
+  console.log("✅ Vista de productos lista, cargando datos...");
+
   // ============================================
-  // 🔄 FUNCIÓN PARA CARGAR PRODUCTOS DESDE EL SERVIDOR
+  // 🔄 FUNCIÓN PARA CARGAR PRODUCTOS
   // ============================================
   async function cargarProductos() {
     tabla.innerHTML = "";
@@ -41,9 +114,6 @@ export function inicializarInventario() {
         return;
       }
 
-      // ============================================
-      // 🧾 Construir tabla con todos los campos
-      // ============================================
       productos.forEach((p) => {
         const fila = document.createElement("tr");
         fila.innerHTML = `
@@ -70,20 +140,6 @@ export function inicializarInventario() {
     }
   }
 
-  // ============================================
-  // 🔁 BOTÓN PARA RECARGAR MANUALMENTE
-  // ============================================
   btnRecargar?.addEventListener("click", cargarProductos);
-
-  // Cargar automáticamente al iniciar
   cargarProductos();
-}
-
-// ============================================
-// ⚡ EJECUTAR AUTOMÁTICAMENTE AL CARGAR LA PÁGINA
-// ============================================
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", inicializarInventario);
-} else {
-  inicializarInventario();
 }

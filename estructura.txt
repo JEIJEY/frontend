@@ -12,6 +12,7 @@
             |-- AVATAR.png
             |-- categories.jpg
             |-- coca.png
+            |-- default-product.png
             |-- facebook copy.png
             |-- facebook.png
             |-- fondo_coca.jpg
@@ -45,6 +46,7 @@
             |-- productos-vista.js
         |-- [utilities]
             |-- apiClient.js
+            |-- debugGrid.js
             |-- EventBus.js
     |-- [pages]
         |-- [dashboard]
@@ -103,6 +105,7 @@
         |-- [templates]
         |-- [utilities]
             |-- _animations.css
+            |-- _debug-grid.css
             |-- _grid.css
             |-- _responsive.css
             |-- _spacing.css

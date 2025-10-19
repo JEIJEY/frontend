@@ -6,29 +6,41 @@
 // 1️⃣ Tomamos referencia al contenedor principal del dashboard.
 const main = document.querySelector(".dashboard-main");
 
+import {
+  toggleGrilla,
+  crearGrillaExacta,
+  observarRedimensionamiento,
+} from "../utilities/debugGrid.js";
+
 // ======================================================
 // 🔧 Función para cargar secciones dinámicamente
 // ======================================================
 async function cargarSeccion(nombreSeccion) {
   try {
-    // ✅ Bloque corregido: si el nombre es "inventario", cargamos inventario_dashboard.html
-    const archivo = nombreSeccion === "inventario"
-      ? "inventario_dashboard"
-      : nombreSeccion;
+    // ✅ Si el nombre es "inventario", cargamos inventario_dashboard.html
+    const archivo =
+      nombreSeccion === "inventario" ? "inventario_dashboard" : nombreSeccion;
 
     const res = await fetch(`./dashboard/${archivo}.html`);
     if (!res.ok) throw new Error(`No se encontró ${archivo}.html`);
     const html = await res.text();
     main.innerHTML = html;
 
-    // Esperamos un poco para que el DOM cargue
+    // Esperamos un poco para que el DOM cargue correctamente
     await new Promise((r) => setTimeout(r, 50));
 
     // Carga dinámica del módulo JS correspondiente
     switch (nombreSeccion) {
       case "inventario":
         await cargarVistaHTML("inventario_dashboard");
+        import("../../js/dashboard/inventario.js").then((mod) =>
+          mod.inicializarInventario?.()
+        );
+        // ❌ Ya no se crea ni muestra automáticamente la grilla
+        // ✅ Solo se prepara el observador (por si se activa después)
+        observarRedimensionamiento();
         break;
+        
 
       case "productos":
         import("../../js/dashboard/inventario.js").then((mod) =>
@@ -79,7 +91,7 @@ async function cargarVistaHTML(nombreArchivo) {
 }
 
 // ======================================================
-// 🚀 Carga inicial del dashboard
+// 🚀 Carga inicial del dashboard (por defecto inventario)
 // ======================================================
 cargarVistaHTML("inventario_dashboard");
 
@@ -105,4 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
   toggle.addEventListener("click", () => {
     item.classList.toggle("open");
   });
+});
+
+// ======================================================
+// 🎹 OPCIONAL: Atajo de teclado "G" para alternar la grilla
+// ======================================================
+document.addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() === "g") {
+    toggleGrilla();
+  }
 });

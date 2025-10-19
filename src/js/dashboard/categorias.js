@@ -151,7 +151,7 @@ function renderSubcategorias(subcategorias) {
 }
 
 // ======================================================
-// 🎯 RENDERIZAR PRODUCTOS (mock temporal)
+// 🎯 RENDERIZAR PRODUCTOS (con precio real formateado)
 // ======================================================
 function renderProductos(productos) {
   const container = document.getElementById("listaProductos");
@@ -163,19 +163,28 @@ function renderProductos(productos) {
   }
 
   productos.forEach(prod => {
+    console.log("🧾 Producto recibido:", prod); // 👈 útil para verificar campos
     const card = document.createElement("div");
     card.className = "producto-card";
+    
+    // Formatear el precio en formato colombiano
+    const precioFormateado = parseFloat(prod.precio_unitario || 0).toLocaleString("es-CO", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
     card.innerHTML = `
       <div class="card">
         <img src="${prod.imagen || '../assets/images/default-product.png'}" alt="${prod.nombre}">
         <h4>${prod.nombre}</h4>
-        <p class="precio">$${prod.precio || '0.00'}</p>
+        <p class="precio">$${precioFormateado}</p>
         <p class="stock">Stock: ${prod.stock || 0}</p>
       </div>
     `;
     container.appendChild(card);
   });
 }
+
 
 // ======================================================
 // 🎯 VOLVER A LA LISTA PRINCIPAL
@@ -308,3 +317,118 @@ if (document.readyState === "loading") {
 
 // 🔥 EXPORTAR PARA USO GLOBAL
 window.cargarCategorias = cargarCategorias;
+
+
+// ======================================================
+// 🎯 MODAL PARA AGREGAR PRODUCTOS
+// ======================================================
+
+// Función para abrir el modal
+window.mostrarModalProducto = function(categoriaId, categoriaNombre) {
+  document.getElementById('modalCategoriaId').value = categoriaId;
+  document.getElementById('modalCategoriaNombre').textContent = categoriaNombre;
+  document.getElementById('modalProducto').style.display = 'flex';
+  
+  // Cargar marcas y proveedores
+  cargarMarcasYProveedores();
+  
+  // Enfocar el primer campo
+  document.getElementById('productoNombre').focus();
+};
+
+// Función para cerrar el modal
+window.cerrarModalProducto = function() {
+  document.getElementById('modalProducto').style.display = 'none';
+  document.getElementById('formProducto').reset();
+};
+
+// Cargar marcas y proveedores para los selects
+async function cargarMarcasYProveedores() {
+  try {
+    // Cargar marcas
+    const marcas = await apiClient.get('/marcas');
+    const marcaSelect = document.getElementById('productoMarca');
+    marcaSelect.innerHTML = '<option value="">Sin marca</option>';
+    marcas.forEach(marca => {
+      if (marca.estado) {
+        const option = document.createElement('option');
+        option.value = marca.id_marca;
+        option.textContent = marca.nombre;
+        marcaSelect.appendChild(option);
+      }
+    });
+
+    // Cargar proveedores
+    const proveedores = await apiClient.get('/proveedores');
+    const proveedorSelect = document.getElementById('productoProveedor');
+    proveedorSelect.innerHTML = '<option value="">Sin proveedor</option>';
+    proveedores.forEach(proveedor => {
+      const option = document.createElement('option');
+      option.value = proveedor.id_proveedor;
+      option.textContent = proveedor.nombre;
+      proveedorSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.warn('⚠️ No se pudieron cargar marcas/proveedores:', error);
+  }
+}
+
+// Manejar envío del formulario
+document.getElementById('formProducto').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const categoriaId = document.getElementById('modalCategoriaId').value;
+  const productoData = {
+    nombre: document.getElementById('productoNombre').value.trim(),
+    descripcion: document.getElementById('productoDescripcion').value.trim(),
+    precio_unitario: parseFloat(document.getElementById('productoPrecio').value),
+    stock: parseInt(document.getElementById('productoStock').value),
+    unidad_medida: document.getElementById('productoUnidad').value,
+    id_marca: document.getElementById('productoMarca').value || null,
+    id_proveedor: document.getElementById('productoProveedor').value || null,
+    estado: parseInt(document.getElementById('productoEstado').value)
+  };
+
+  // Validación básica
+  if (!productoData.nombre || !productoData.precio_unitario || !productoData.stock || !productoData.unidad_medida) {
+    alert('❌ Por favor completa los campos obligatorios');
+    return;
+  }
+
+  try {
+    console.log('🔄 Creando producto en categoría:', categoriaId, productoData);
+    
+    // ✅ Usar el NUEVO endpoint específico para categorías
+    const response = await apiClient.post(`/categorias/${categoriaId}/productos`, productoData);
+    
+    console.log('✅ Producto creado:', response);
+    
+    // Cerrar modal
+    cerrarModalProducto();
+    
+    // Recargar la vista detalle para mostrar el nuevo producto
+    const categoriaNombre = document.getElementById('detalleNombre').textContent;
+    await cargarVistaDetalle(categoriaId, categoriaNombre);
+    
+    // Mostrar mensaje de éxito
+    alert(`✅ Producto "${productoData.nombre}" agregado correctamente`);
+    
+  } catch (error) {
+    console.error('❌ Error creando producto:', error);
+    alert('❌ Error al crear producto: ' + error.message);
+  }
+});
+
+// Cerrar modal al hacer clic fuera del contenido
+document.getElementById('modalProducto').addEventListener('click', function(e) {
+  if (e.target.id === 'modalProducto') {
+    cerrarModalProducto();
+  }
+});
+
+// Cerrar modal con la tecla Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('modalProducto').style.display === 'flex') {
+    cerrarModalProducto();
+  }
+});
