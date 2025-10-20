@@ -39,7 +39,9 @@
         |-- [components]
             |-- logout-button.js
         |-- [dashboard]
+            |-- abc.js
             |-- categorias.js
+            |-- configuracion.js
             |-- dashboard.js
             |-- inventario.js
             |-- navegacion-categorias.js
@@ -102,6 +104,7 @@
             |-- _products-grid.css
             |-- _promo-section.css
             |-- _redirect-screen.css
+            |-- inventario_dashboard.css
         |-- [templates]
         |-- [utilities]
             |-- _animations.css

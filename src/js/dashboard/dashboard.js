@@ -1,11 +1,11 @@
 // ======================================================
-// DASHBOARD.JS
-// Controlador principal de vistas dinámicas del panel
+// DASHBOARD.JS - VERSIÓN REPARADA Y OPTIMIZADA
 // ======================================================
 
-// 1️⃣ Tomamos referencia al contenedor principal del dashboard.
+// 📦 Contenedor principal del contenido dinámico
 const main = document.querySelector(".dashboard-main");
 
+// 🧩 Utilidades globales (grilla de depuración)
 import {
   toggleGrilla,
   crearGrillaExacta,
@@ -13,11 +13,10 @@ import {
 } from "../utilities/debugGrid.js";
 
 // ======================================================
-// 🔧 Función para cargar secciones dinámicamente
+// 🔧 FUNCIÓN PRINCIPAL: CARGA DE SECCIONES DINÁMICAS
 // ======================================================
 async function cargarSeccion(nombreSeccion) {
   try {
-    // ✅ Si el nombre es "inventario", cargamos inventario_dashboard.html
     const archivo =
       nombreSeccion === "inventario" ? "inventario_dashboard" : nombreSeccion;
 
@@ -26,21 +25,23 @@ async function cargarSeccion(nombreSeccion) {
     const html = await res.text();
     main.innerHTML = html;
 
-    // Esperamos un poco para que el DOM cargue correctamente
+    // Esperar un momento para asegurar que el DOM cargue
     await new Promise((r) => setTimeout(r, 50));
 
     // Carga dinámica del módulo JS correspondiente
     switch (nombreSeccion) {
       case "inventario":
+        console.log("📦 Cargando vista Inventario...");
+
+        // 1️⃣ Carga la vista
         await cargarVistaHTML("inventario_dashboard");
-        import("../../js/dashboard/inventario.js").then((mod) =>
-          mod.inicializarInventario?.()
-        );
-        // ❌ Ya no se crea ni muestra automáticamente la grilla
-        // ✅ Solo se prepara el observador (por si se activa después)
+
+        // 2️⃣ Carga el módulo ABC (análisis inteligente)
+        await cargarABCparaInventario();
+
+        // 3️⃣ Observa la grilla si está activa
         observarRedimensionamiento();
         break;
-        
 
       case "productos":
         import("../../js/dashboard/inventario.js").then((mod) =>
@@ -77,7 +78,7 @@ async function cargarSeccion(nombreSeccion) {
 }
 
 // ======================================================
-// 🔧 Función auxiliar: carga vistas estáticas simples
+// 🔧 FUNCIÓN AUXILIAR: CARGAR VISTAS ESTÁTICAS
 // ======================================================
 async function cargarVistaHTML(nombreArchivo) {
   try {
@@ -93,10 +94,15 @@ async function cargarVistaHTML(nombreArchivo) {
 // ======================================================
 // 🚀 Carga inicial del dashboard (por defecto inventario)
 // ======================================================
-cargarVistaHTML("inventario_dashboard");
+(async () => {
+  console.log("🚀 Cargando vista inicial (Inventario con ABC)...");
+  await cargarVistaHTML("inventario_dashboard");
+  await cargarABCparaInventario(); // ✅ se carga ABC al inicio
+})();
+
 
 // ======================================================
-// 🧭 Enlaces del sidebar (navegación sin recargar la página)
+// 🧭 NAVEGACIÓN SIN RECARGAR LA PÁGINA
 // ======================================================
 document.querySelectorAll(".sidebar-menu__link").forEach((link) => {
   link.addEventListener("click", (e) => {
@@ -107,7 +113,7 @@ document.querySelectorAll(".sidebar-menu__link").forEach((link) => {
 });
 
 // ======================================================
-// 📂 Control visual del submenú (Inventario desplegable)
+// 📂 CONTROL VISUAL DEL SUBMENÚ DE INVENTARIO
 // ======================================================
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("inventarioToggle");
@@ -120,10 +126,47 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ======================================================
-// 🎹 OPCIONAL: Atajo de teclado "G" para alternar la grilla
+// 🎹 ATAJO DE TECLADO "G" PARA MOSTRAR GRILLA DE DEPURACIÓN
 // ======================================================
 document.addEventListener("keydown", (e) => {
   if (e.key.toLowerCase() === "g") {
     toggleGrilla();
   }
 });
+
+// ======================================================
+// 🚀 CARGA ESPECÍFICA PARA EL MÓDULO ABC (ANÁLISIS DE INVENTARIO)
+// ======================================================
+async function cargarABCparaInventario() {
+  console.log("🔄 Iniciando carga de ABC...");
+
+  return new Promise((resolve) => {
+    // Evita recargar si ya está cargado
+    if (window.recalcularABC && window.filtrarProductos) {
+      console.log("⚡ ABC.js ya estaba cargado");
+      return resolve();
+    }
+
+    const script = document.createElement("script");
+    script.src = "/src/js/dashboard/abc.js"; // ✅ Ruta absoluta (funciona desde cualquier nivel)
+    script.type = "text/javascript";
+    script.defer = true;
+
+    script.onload = () => {
+      console.log("✅ ABC.js cargado exitosamente");
+      console.log("🧠 Funciones disponibles:", {
+        recalcularABC: typeof window.recalcularABC,
+        filtrarProductos: typeof window.filtrarProductos,
+        cargarDatosABC: typeof window.cargarDatosABC,
+      });
+      resolve();
+    };
+
+    script.onerror = (error) => {
+      console.error("❌ Error al cargar ABC.js:", error);
+      resolve();
+    };
+
+    document.head.appendChild(script);
+  });
+}

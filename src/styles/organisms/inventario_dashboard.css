@@ -1,135 +1,237 @@
 /* ======================================================
-   🎨 INVENTARIO DASHBOARD AISLADO (Prefijo: invp-)
+   🔤 ESCALA TIPOGRÁFICA GLOBAL
+   Basada en referencia visual: h1=20px → h5=10px
 ====================================================== */
-
-.invp-dashboard {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 2rem;
-  padding: 2rem;
-  height: 100%;
-  background: var(--invp-bg-color, #f9fafb);
-}
-
-/* ======================================================
-   🔹 ENCABEZADO
-====================================================== */
-.invp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.invp-header__title {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #333;
-}
-
-/* ======================================================
-   🔸 BOTONES
-====================================================== */
-.invp-btn {
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-family: inherit;
-}
-
-.invp-btn--primary {
-  background-color: #2563eb;
-  color: #fff;
-}
-
-.invp-btn--secondary {
-  background-color: #f3f4f6;
-  color: #111;
-}
-
-.invp-btn:hover {
-  opacity: 0.9;
-}
-
-/* ======================================================
-   🧱 GRID PRINCIPAL
-====================================================== */
-.invp-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(150px, auto);
-  gap: 1.5rem;
-}
-
-/* ======================================================
-   🧩 CARDS
-====================================================== */
-.invp-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.invp-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-}
-
-.invp-card--main {
-  grid-column: span 12;
-  min-height: 260px;
-}
-
-.invp-card--small {
-  grid-column: span 6;
-}
-
-.invp-card__empty {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-
-.invp-card__actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.invp-card__title {
-  font-size: 1.1rem;
+h1 {
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-.invp-card__text {
-  color: #666;
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+h4 {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+h5 {
+  font-size: 10px;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+/* Para mantener consistencia con los párrafos */
+p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #444;
+  margin: 0.2rem 0;
+}
+
+.invp-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1350px;
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 2rem 2.5rem;
+}
+
+/* En pantallas pequeñas: 1 columna */
+@media (max-width: 900px) {
+  .invp-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ======================================================
-   🌙 MODO OSCURO
+   📊 BLOQUE ABC
 ====================================================== */
-[data-theme="dark"] .invp-dashboard {
-  background: #121212;
+.invp-abc-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-[data-theme="dark"] .invp-card {
-  background: #1e1e1e;
-  color: #f0f0f0;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+.invp-abc-block__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 0.5rem;
 }
 
-[data-theme="dark"] .invp-btn--primary {
-  background: #3b82f6;
+.invp-abc-block__title {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.invp-abc-block__cards {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.invp-abc-card {
+  flex: 1;
+  min-width: 200px;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.invp-abc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Degradados */
+.invp-abc-card--A {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+.invp-abc-card--B {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+}
+.invp-abc-card--C {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+/* Tarjetas secundarias */
+.invp-abc-block__extras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.invp-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.invp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1);
+}
+
+.invp-card__icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: #2563eb;
+}
+
+/* ======================================================
+   🎯 BLOQUE DE ACCIONES INTELIGENTES
+====================================================== */
+.invp-dashboard__header h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.invp-dashboard__desc {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.invp-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.invp-action-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.invp-action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Variantes */
+.invp-action-card--urgent {
+  border-left: 4px solid #dc2626;
+}
+.invp-action-card--info {
+  border-left: 4px solid #2563eb;
+}
+.invp-action-card--warning {
+  border-left: 4px solid #d97706;
+}
+
+/* Botón */
+.invp-action-button {
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0.45rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.invp-action-button:hover {
+  background: currentColor;
+  color: white;
+}
+
+/* ======================================================
+   ⚠️ BLOQUE ALERTA CRÍTICA
+====================================================== */
+.invp-alert-block {
+  display: flex;
+  gap: 1.2rem;
+  background: #fff4f4;
+  border-left: 6px solid #dc2626;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.invp-alert-block__icon {
+  font-size: 1.8rem;
+}
+
+.invp-alert-block__action {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  margin-top: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.invp-alert-block__action:hover {
+  background: #b91c1c;
 }

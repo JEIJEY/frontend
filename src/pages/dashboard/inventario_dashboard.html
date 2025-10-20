@@ -1,38 +1,152 @@
-<!-- ======================================================
-     📦 DASHBOARD DE INVENTARIO (AISLADO, SIN RENOMBRAR EL ARCHIVO)
-====================================================== -->
-<section class="invp-dashboard">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📊 Panel Inteligente de Inventario</title>
 
-  <!-- 🔹 ENCABEZADO -->
-  <header class="invp-header">
-    <h1 class="invp-header__title">📦 Inventario</h1>
-    <button class="invp-btn invp-btn--primary">➕ Crear producto</button>
-  </header>
+  <!-- 🎨 Estilos -->
+  <link
+    rel="stylesheet"
+    href="/src/styles/organisms/inventario_dashboard.css"
+  />
 
-  <!-- 🔹 CONTENEDOR PRINCIPAL -->
-  <div class="invp-grid">
+  <!-- 🧠 Fuente moderna -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
 
-    <!-- 🧭 CARD PRINCIPAL -->
-    <div class="invp-card invp-card--main">
-      <p class="invp-card__empty">Aún no hay productos registrados</p>
+<body>
+  <main class="invp-dashboard-grid">
+    <!-- ======================================================
+         📊 BLOQUE ABC
+    ======================================================= -->
+    <section class="invp-abc-block">
+      <header class="invp-abc-block__header">
+        <span class="invp-abc-block__icon">📊</span>
+        <h2 class="invp-abc-block__title">Análisis de Inventario</h2>
+        <button class="invp-abc-block__refresh" onclick="recalcularABC(event)">
+          🔄 Actualizar ABC
+        </button>
+      </header>
 
-      <div class="invp-card__actions">
-        <button class="invp-btn invp-btn--primary">📦 Crear producto</button>
-        <button class="invp-btn invp-btn--secondary">📘 Ver guía</button>
+      <div class="invp-abc-block__cards">
+        <div
+          class="invp-abc-card invp-abc-card--A"
+          onclick="filtrarProductos('A')"
+        >
+          <div class="invp-abc-card__icon">🅰️</div>
+          <p class="invp-abc-card__label">Productos Clase A</p>
+          <h3 class="invp-abc-card__value" id="count-A">0</h3>
+          <small class="invp-abc-card__subtitle">0% del valor</small>
+          <div class="invp-abc-card__bar">
+            <div class="fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div
+          class="invp-abc-card invp-abc-card--B"
+          onclick="filtrarProductos('B')"
+        >
+          <div class="invp-abc-card__icon">🅱️</div>
+          <p class="invp-abc-card__label">Productos Clase B</p>
+          <h3 class="invp-abc-card__value" id="count-B">0</h3>
+          <small class="invp-abc-card__subtitle">0% del valor</small>
+          <div class="invp-abc-card__bar">
+            <div class="fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div
+          class="invp-abc-card invp-abc-card--C"
+          onclick="filtrarProductos('C')"
+        >
+          <div class="invp-abc-card__icon">🅲</div>
+          <p class="invp-abc-card__label">Productos Clase C</p>
+          <h3 class="invp-abc-card__value" id="count-C">0</h3>
+          <small class="invp-abc-card__subtitle">0% del valor</small>
+          <div class="invp-abc-card__bar">
+            <div class="fill" style="width: 0%"></div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- 🧮 CARD SECUNDARIA 1 -->
-    <div class="invp-card invp-card--small">
-      <h3 class="invp-card__title">📈 Estadísticas</h3>
-      <p class="invp-card__text">Resumen visual del inventario.</p>
-    </div>
+      <div class="invp-abc-block__extras">
+        <div class="invp-card invp-card--small">
+          <div class="invp-card__icon">📈</div>
+          <h3 class="invp-card__title">Tendencias</h3>
+          <p class="invp-card__text">Monitoreo de cambios recientes.</p>
+        </div>
 
-    <!-- ⚙️ CARD SECUNDARIA 2 -->
-    <div class="invp-card invp-card--small">
-      <h3 class="invp-card__title">⚙️ Configuración rápida</h3>
-      <p class="invp-card__text">Accesos directos a ajustes.</p>
-    </div>
+        <div class="invp-card invp-card--small">
+          <div class="invp-card__icon">⚙️</div>
+          <h3 class="invp-card__title">Configuración rápida</h3>
+          <p class="invp-card__text">Acceso directo a ajustes ABC.</p>
+        </div>
+      </div>
+    </section>
 
-  </div>
-</section>
+    <!-- ======================================================
+         🎯 BLOQUE DE ACCIONES INTELIGENTES
+    ======================================================= -->
+    <section class="invp-dashboard">
+      <header class="invp-dashboard__header">
+        <h2>Acciones Inteligentes</h2>
+        <p class="invp-dashboard__desc">
+          Detecta oportunidades, previene quiebres y optimiza tu inventario.
+        </p>
+      </header>
+
+      <div class="invp-actions-grid">
+        <div class="invp-action-card invp-action-card--urgent">
+          <div class="invp-action-card__header">
+            <span class="invp-action-card__icon">🚨</span>
+            <h4>Acciones Urgentes</h4>
+          </div>
+          <div class="invp-action-card__content">
+            <p><strong>2 productos</strong> con stock crítico</p>
+            <button class="invp-action-button">Ver y resolver</button>
+          </div>
+        </div>
+
+        <div class="invp-action-card invp-action-card--info">
+          <div class="invp-action-card__header">
+            <span class="invp-action-card__icon">🛒</span>
+            <h4>Lista de Compra</h4>
+          </div>
+          <div class="invp-action-card__content">
+            <p><strong>5 productos</strong> necesitan reposición</p>
+            <button class="invp-action-button">Generar automáticamente</button>
+          </div>
+        </div>
+
+        <div class="invp-action-card invp-action-card--warning">
+          <div class="invp-action-card__header">
+            <span class="invp-action-card__icon">💰</span>
+            <h4>Capital Optimizable</h4>
+          </div>
+          <div class="invp-action-card__content">
+            <p><strong>$180,000</strong> liberables</p>
+            <button class="invp-action-button">Ver detalles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="invp-alert-block invp-alert-block--critical">
+        <div class="invp-alert-block__icon">⚠️</div>
+        <div class="invp-alert-block__content">
+          <h4>Stock Crítico en Productos Clave</h4>
+          <p><strong>Aceite Premier:</strong> Solo 5 unidades (se acaba en 2 días)</p>
+          <p><strong>Arroz Roa:</strong> Solo 8 unidades (se acaba en 3 días)</p>
+          <button class="invp-alert-block__action">
+            Generar orden de compra urgente
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 🔗 Script principal -->
+  <script src="/js/dashboard/abc.js"></script>
+</body>
+</html>
