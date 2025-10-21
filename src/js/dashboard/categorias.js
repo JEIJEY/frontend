@@ -14,14 +14,22 @@ const lista = document.getElementById("listaCategorias");
 const _safe = (s = "") => String(s).replace(/'/g, "\\'");
 
 // ======================================================
-// 🎯 CARGAR JERARQUÍA COMPLETA DE CATEGORÍAS
+// 🎯 CARGAR JERARQUÍA COMPLETA DE CATEGORÍAS (CORREGIDO)
 // ======================================================
 async function cargarCategorias() {
   try {
-    console.log("🔄 Cargando jerarquía de categorías...");
-    const categorias = await apiClient.getJerarquiaCategorias();
-    console.log("✅ Jerarquía recibida:", categorias);
+    console.log("🔄 Cargando categorías directamente desde la base de datos...");
+    const token = localStorage.getItem("authToken");
 
+    // ✅ 1. Llamada directa al backend MySQL
+    const res = await fetch("http://localhost:3001/api/categorias", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) throw new Error("Error al obtener categorías desde backend");
+    const categorias = await res.json();
+
+    console.log("✅ Categorías recibidas desde MySQL:", categorias);
     lista.innerHTML = "";
 
     if (!categorias || categorias.length === 0) {
@@ -29,8 +37,8 @@ async function cargarCategorias() {
       return;
     }
 
-    // 🔥 FILTRAR SOLO CATEGORÍAS RAÍZ (nivel 0)
-    const categoriasRaiz = categorias.filter(cat => cat.nivel === 0);
+    // ✅ 2. Filtramos raíz (solo las que no tienen padre)
+    const categoriasRaiz = categorias.filter(cat => cat.parent_id === null);
     console.log(`📊 Mostrando ${categoriasRaiz.length} categorías raíz de ${categorias.length} total`);
 
     if (categoriasRaiz.length === 0) {
@@ -38,7 +46,7 @@ async function cargarCategorias() {
       return;
     }
 
-    // 🔥 Renderizado SOLO categorías raíz
+    // ✅ 3. Renderizar tarjetas raíz
     categoriasRaiz.forEach(cat => {
       const li = document.createElement("li");
       li.className = "categoria-card";
@@ -46,7 +54,7 @@ async function cargarCategorias() {
         <div class="card" onclick="abrirDetalleCategoria(${cat.id_categoria}, '${_safe(cat.nombre)}')">
           <div class="card-header">
             <h3>${cat.nombre}</h3>
-            <span class="badge">${cat.nivel === 0 ? 'Categoría' : 'Subcategoría'}</span>
+            <span class="badge">${cat.parent_id ? 'Subcategoría' : 'Categoría'}</span>
           </div>
           <p class="card-desc">${cat.descripcion && cat.descripcion.trim() !== "" ? cat.descripcion : "Sin descripción"}</p>
           <div class="card-actions">
@@ -66,8 +74,8 @@ async function cargarCategorias() {
     });
 
   } catch (err) {
-    console.error("❌ Error cargando jerarquía:", err);
-    alert("Error al cargar categorías jerárquicas: " + err.message);
+    console.error("❌ Error cargando categorías:", err);
+    alert("Error al cargar categorías desde el servidor: " + err.message);
   }
 }
 
@@ -77,12 +85,8 @@ async function cargarCategorias() {
 window.abrirDetalleCategoria = (id, nombre) => {
   console.log(`🔍 Abriendo detalle de: ${nombre}`);
   
-  // Ocultar lista principal
   document.getElementById('vistaRaiz').style.display = 'none';
-  // Mostrar vista detalle
   document.getElementById('vistaDetalle').style.display = 'block';
-  
-  // Cargar información de esa categoría
   cargarVistaDetalle(id, nombre);
 };
 
@@ -91,24 +95,18 @@ window.abrirDetalleCategoria = (id, nombre) => {
 // ======================================================
 async function cargarVistaDetalle(categoriaId, nombreCategoria) {
   try {
-    // Actualizar textos base
     document.getElementById("detalleTitulo").textContent = `Categoría: ${nombreCategoria}`;
     document.getElementById("detalleNombre").textContent = nombreCategoria;
-
-    // ✅ Guardar el ID actual globalmente
     window.categoriaActualId = categoriaId;
 
-    // 1️⃣ Obtener información completa de la categoría
     const categoria = await apiClient.getCategoriaById(categoriaId);
     document.getElementById("detalleDescripcion").textContent =
       categoria.descripcion || "Sin descripción";
 
-    // 2️⃣ Cargar subcategorías
     const subcategorias = await apiClient.get(`/categorias/${categoriaId}/subcategorias`);
     document.getElementById("detalleSubcount").textContent = subcategorias.length;
     renderSubcategorias(subcategorias);
 
-    // 3️⃣ Cargar productos (más adelante lo conectaremos con tu módulo de productos)
     let productos = [];
     try {
       productos = await apiClient.get(`/productos/categoria/${categoriaId}`);
@@ -163,11 +161,10 @@ function renderProductos(productos) {
   }
 
   productos.forEach(prod => {
-    console.log("🧾 Producto recibido:", prod); // 👈 útil para verificar campos
+    console.log("🧾 Producto recibido:", prod);
     const card = document.createElement("div");
     card.className = "producto-card";
     
-    // Formatear el precio en formato colombiano
     const precioFormateado = parseFloat(prod.precio_unitario || 0).toLocaleString("es-CO", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
@@ -185,7 +182,6 @@ function renderProductos(productos) {
   });
 }
 
-
 // ======================================================
 // 🎯 VOLVER A LA LISTA PRINCIPAL
 // ======================================================
@@ -202,7 +198,7 @@ window.crearSubcategoriaEnDetalle = async () => {
   const categoriaId = window.categoriaActualId;
 
   await crearSubcategoria(categoriaId, categoriaActual);
-  await cargarVistaDetalle(categoriaId, categoriaActual); // 🔁 recargar después de crear
+  await cargarVistaDetalle(categoriaId, categoriaActual);
 };
 
 // ======================================================
@@ -306,7 +302,6 @@ function inicializarModulos() {
   NavegacionCategorias.init();
 }
 
-// Verificar si el DOM ya está cargado
 if (document.readyState === "loading") {
   console.log("🎯 DOM todavía cargando, esperando DOMContentLoaded...");
   document.addEventListener("DOMContentLoaded", inicializarModulos);
@@ -315,37 +310,27 @@ if (document.readyState === "loading") {
   setTimeout(inicializarModulos, 0);
 }
 
-// 🔥 EXPORTAR PARA USO GLOBAL
 window.cargarCategorias = cargarCategorias;
-
 
 // ======================================================
 // 🎯 MODAL PARA AGREGAR PRODUCTOS
 // ======================================================
-
-// Función para abrir el modal
 window.mostrarModalProducto = function(categoriaId, categoriaNombre) {
   document.getElementById('modalCategoriaId').value = categoriaId;
   document.getElementById('modalCategoriaNombre').textContent = categoriaNombre;
   document.getElementById('modalProducto').style.display = 'flex';
   
-  // Cargar marcas y proveedores
   cargarMarcasYProveedores();
-  
-  // Enfocar el primer campo
   document.getElementById('productoNombre').focus();
 };
 
-// Función para cerrar el modal
 window.cerrarModalProducto = function() {
   document.getElementById('modalProducto').style.display = 'none';
   document.getElementById('formProducto').reset();
 };
 
-// Cargar marcas y proveedores para los selects
 async function cargarMarcasYProveedores() {
   try {
-    // Cargar marcas
     const marcas = await apiClient.get('/marcas');
     const marcaSelect = document.getElementById('productoMarca');
     marcaSelect.innerHTML = '<option value="">Sin marca</option>';
@@ -358,7 +343,6 @@ async function cargarMarcasYProveedores() {
       }
     });
 
-    // Cargar proveedores
     const proveedores = await apiClient.get('/proveedores');
     const proveedorSelect = document.getElementById('productoProveedor');
     proveedorSelect.innerHTML = '<option value="">Sin proveedor</option>';
@@ -373,7 +357,6 @@ async function cargarMarcasYProveedores() {
   }
 }
 
-// Manejar envío del formulario
 document.getElementById('formProducto').addEventListener('submit', async (e) => {
   e.preventDefault();
   
@@ -389,7 +372,6 @@ document.getElementById('formProducto').addEventListener('submit', async (e) => 
     estado: parseInt(document.getElementById('productoEstado').value)
   };
 
-  // Validación básica
   if (!productoData.nombre || !productoData.precio_unitario || !productoData.stock || !productoData.unidad_medida) {
     alert('❌ Por favor completa los campos obligatorios');
     return;
@@ -397,36 +379,22 @@ document.getElementById('formProducto').addEventListener('submit', async (e) => 
 
   try {
     console.log('🔄 Creando producto en categoría:', categoriaId, productoData);
-    
-    // ✅ Usar el NUEVO endpoint específico para categorías
     const response = await apiClient.post(`/categorias/${categoriaId}/productos`, productoData);
-    
     console.log('✅ Producto creado:', response);
-    
-    // Cerrar modal
     cerrarModalProducto();
-    
-    // Recargar la vista detalle para mostrar el nuevo producto
     const categoriaNombre = document.getElementById('detalleNombre').textContent;
     await cargarVistaDetalle(categoriaId, categoriaNombre);
-    
-    // Mostrar mensaje de éxito
     alert(`✅ Producto "${productoData.nombre}" agregado correctamente`);
-    
   } catch (error) {
     console.error('❌ Error creando producto:', error);
     alert('❌ Error al crear producto: ' + error.message);
   }
 });
 
-// Cerrar modal al hacer clic fuera del contenido
 document.getElementById('modalProducto').addEventListener('click', function(e) {
-  if (e.target.id === 'modalProducto') {
-    cerrarModalProducto();
-  }
+  if (e.target.id === 'modalProducto') cerrarModalProducto();
 });
 
-// Cerrar modal con la tecla Escape
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.getElementById('modalProducto').style.display === 'flex') {
     cerrarModalProducto();

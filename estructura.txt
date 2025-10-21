@@ -56,6 +56,7 @@
             |-- categorias.html
             |-- configuracion.html
             |-- inventario_dashboard.html
+            |-- modal-producto.html
             |-- productos.html
             |-- reportes.html
             |-- usuarios.html
@@ -101,6 +102,7 @@
             |-- _inventario.css
             |-- _login-card.css
             |-- _login-form.css
+            |-- _modal-producto.css
             |-- _products-grid.css
             |-- _promo-section.css
             |-- _redirect-screen.css

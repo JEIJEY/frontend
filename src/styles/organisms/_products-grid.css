@@ -1,5 +1,5 @@
 /* =========== PRODUCTS GRID ORGANISM =========== */
-.products-grid {
+/* .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--space-8);
@@ -22,4 +22,4 @@
   margin-bottom: var(--space-8);
   color: var(--white-color);
   grid-column: 1 / -1;
-}
+} */

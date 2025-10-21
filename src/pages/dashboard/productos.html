@@ -1,10 +1,19 @@
-<!-- 🔹 SECCIÓN PRINCIPAL DEL INVENTARIO -->
+<!-- ======================================================
+     📦 VISTA PRINCIPAL DEL INVENTARIO DE PRODUCTOS
+====================================================== -->
 <section class="inventario">
-  
+
   <!-- 🔸 Encabezado del inventario -->
   <header class="inventario__header">
     <h1>📦 Inventario de productos</h1>
-    <button id="btnRecargar" class="btn btn-primary">🔄 Recargar lista</button>
+
+    <div class="inventario__acciones">
+      <!-- ➕ Botón para crear un nuevo producto -->
+      <button id="btnCrearProducto" class="btn btn-success">➕ Crear producto</button>
+
+      <!-- 🔄 Botón para recargar lista -->
+      <button id="btnRecargar" class="btn btn-primary">🔄 Recargar lista</button>
+    </div>
   </header>
 
   <!-- 🔸 Tabla donde se mostrarán los productos -->
@@ -35,5 +44,12 @@
   <p id="estadoCarga" class="inventario__estado"></p>
 </section>
 
-<!-- 🔹 Script del módulo -->
+<!-- ======================================================
+     🧩 CONTENEDOR PARA EL MODAL DE CREACIÓN DE PRODUCTO
+====================================================== -->
+<div id="modalHostProductos"></div>
+
+<!-- ======================================================
+     🔗 SCRIPT DEL MÓDULO DE PRODUCTOS
+====================================================== -->
 <script type="module" src="../../js/dashboard/productos.js"></script>
