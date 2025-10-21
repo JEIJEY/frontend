@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - La Rivera</title>
 
-    <!-- Tipografías -->
+    <!-- ==========================
+         Tipografías
+    =========================== -->
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&display=swap"
@@ -16,9 +18,12 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
     />
 
-    <!-- ✅ Estilos principales -->
-
+    <!-- ==========================
+         Estilos principales
+    =========================== -->
     <link rel="stylesheet" href="../styles/index.css" />
+    <!-- 🔹 Loader global -->
+    <link rel="stylesheet" href="../styles/utilities/_loader.css" />
   </head>
 
   <body>
@@ -203,10 +208,27 @@
       <main class="dashboard-main"></main>
     </div>
 
-    <!-- Scripts -->
+    <!-- ==========================
+         LOADER GLOBAL MULTI-RING
+    =========================== -->
+    <div id="spaLoader" class="spa-loader">
+      <div class="spinner">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+    </div>
+
+    <!-- ==========================
+         SCRIPTS
+    =========================== -->
     <script src="../js/components/logout-button.js"></script>
     <script type="module" src="../js/dashboard/dashboard.js"></script>
-    <!-- 🔹 Script del módulo ABC -->
-   
   </body>
 </html>

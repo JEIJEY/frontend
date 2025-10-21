@@ -1,19 +1,21 @@
 // ======================================================
-// INVENTARIO.JS — Control unificado para Inventario y Productos
+// 📦 INVENTARIO.JS — CONTROL UNIFICADO PARA INVENTARIO Y PRODUCTOS
+// Versión compatible con SPAViewManager (sin duplicar eventos)
 // ======================================================
 
 console.log("✅ inventario.js cargado correctamente");
 
-// PASO 1: import necesario
+// 📦 Importaciones necesarias
 import apiClient from "../utilities/apiClient.js";
 
 // ======================================================
-// 🚀 FUNCIÓN PRINCIPAL DEL INVENTARIO
+// 🚀 FUNCIÓN PRINCIPAL (punto de entrada para SPAViewManager)
 // ======================================================
 export async function inicializarInventario() {
-  console.log("⏳ Esperando a que cargue la vista del módulo...");
+  console.log("⏳ Esperando a que cargue la vista del módulo Inventario...");
 
   try {
+    // Esperamos a que los elementos principales se inyecten en el DOM
     await esperarElemento(".invp-dashboard, #tablaProductos");
 
     if (document.querySelector(".invp-dashboard")) {
@@ -81,8 +83,6 @@ function inicializarProductos() {
   const tabla = document.getElementById("tablaProductos");
   const estado = document.getElementById("estadoCarga");
   const btnRecargar = document.getElementById("btnRecargar");
-
-  // 👇 PASO 2: nuevos elementos
   const btnCrear = document.getElementById("btnCrearProducto");
   const hostModal = document.getElementById("modalHostProductos");
 
@@ -93,9 +93,9 @@ function inicializarProductos() {
 
   console.log("✅ Vista de productos lista, cargando datos...");
 
-  // ============================================
-  // 🔄 FUNCIÓN PARA CARGAR PRODUCTOS
-  // ============================================
+  // ======================================================
+  // 🔄 CARGAR PRODUCTOS
+  // ======================================================
   async function cargarProductos() {
     tabla.innerHTML = "";
     estado.textContent = "⏳ Cargando productos...";
@@ -112,11 +112,10 @@ function inicializarProductos() {
       });
 
       if (!respuesta.ok) throw new Error("Error al obtener productos");
-
       const productos = await respuesta.json();
 
       if (!productos.length) {
-        estado.textContent = "📭 No hay productos en la base de datos.";
+        estado.textContent = "📭 No hay productos registrados.";
         return;
       }
 
@@ -146,19 +145,29 @@ function inicializarProductos() {
     }
   }
 
-  btnRecargar?.addEventListener("click", cargarProductos);
-  btnCrear?.addEventListener("click", abrirModalCrearProducto_P1);
+  // ======================================================
+  // 🎯 EVENTOS DE INTERFAZ
+  // ======================================================
+  if (!btnRecargar.dataset.listener) {
+    btnRecargar.dataset.listener = "true";
+    btnRecargar.addEventListener("click", cargarProductos);
+  }
 
+  if (btnCrear && !btnCrear.dataset.listener) {
+    btnCrear.dataset.listener = "true";
+    btnCrear.addEventListener("click", abrirModalCrearProducto);
+  }
+
+  // Carga inicial
   cargarProductos();
 
   // ======================================================
-  // 🧩 PASO 2 - ABRIR MODAL BÁSICO
+  // 🧩 MODAL DE CREAR PRODUCTO
   // ======================================================
-  async function abrirModalCrearProducto_P1() {
+  async function abrirModalCrearProducto() {
     if (!document.getElementById("modalProductoInventario")) {
       try {
         const res = await fetch("/src/pages/dashboard/modal-producto.html");
-
         if (!res.ok) throw new Error("No se encontró modal-producto.html");
         hostModal.innerHTML = await res.text();
         console.log("✅ Modal inyectado en el DOM");
@@ -174,16 +183,12 @@ function inicializarProductos() {
     const modal = document.getElementById("modalProductoInventario");
     if (modal) {
       modal.style.display = "flex";
-      console.log("✅ Modal mostrado (PASO 2)");
+      console.log("✅ Modal mostrado");
 
-      // 🗂️ PASO 3 - CARGAR DATOS EN LOS SELECTS
       await cargarCategoriasEnSelect();
       await cargarMarcasEnSelect();
       await cargarProveedoresEnSelect();
 
-      // ======================================================
-      // 🧩 PASO 4 — ENLAZAR FORMULARIO DEL MODAL CON BACKEND
-      // ======================================================
       const formProducto = document.getElementById("formProducto");
       const btnCancelar = document.getElementById("cancelarModal");
 
@@ -193,228 +198,188 @@ function inicializarProductos() {
 
       formProducto?.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const nuevoProducto = {
-          nombre: document.getElementById("nombre").value.trim(),
-          descripcion: document.getElementById("descripcion").value.trim(),
-          stock: parseInt(document.getElementById("stock").value || 0),
-          unidad_medida: document.getElementById("unidad").value.trim(),
-          precio_unitario: parseFloat(document.getElementById("precio").value || 0),
-          id_categoria: parseInt(document.getElementById("categoria").value),
-          id_marca: parseInt(document.getElementById("marca").value),
-          id_proveedor: parseInt(document.getElementById("proveedor").value),
-          estado: parseInt(document.getElementById("estado").value),
-        };
-
-        if (!nuevoProducto.nombre || !nuevoProducto.precio_unitario || !nuevoProducto.id_categoria || !nuevoProducto.id_marca || !nuevoProducto.id_proveedor) {
-          alert("⚠️ Faltan campos obligatorios.");
-          return;
-        }
-
-        try {
-          const token = localStorage.getItem("authToken");
-          const respuesta = await fetch("http://localhost:3001/api/productos", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(nuevoProducto),
-          });
-
-          const data = await respuesta.json();
-
-          if (respuesta.ok) {
-            alert("✅ Producto agregado correctamente");
-            modal.style.display = "none";
-            await cargarProductos();
-          } else {
-            alert(`❌ Error: ${data.message}`);
-          }
-        } catch (error) {
-          console.error("💥 Error al guardar producto:", error);
-          alert("❌ Error al conectar con el servidor");
-        }
+        await guardarNuevoProducto(modal, cargarProductos);
       });
     }
   }
 
   // ======================================================
-  // 🗂️ PASO 3 - CARGAR CATEGORÍAS / MARCAS / PROVEEDORES
+  // 🧠 FUNCIÓN PARA GUARDAR NUEVO PRODUCTO
   // ======================================================
-  async function cargarCategoriasEnSelect() {
-    const selectCategoria = document.getElementById("categoria");
-    if (!selectCategoria) return console.warn("⚠️ No se encontró el select de categorías");
+  async function guardarNuevoProducto(modal, recargar) {
+    const nuevoProducto = {
+      nombre: document.getElementById("nombre").value.trim(),
+      descripcion: document.getElementById("descripcion").value.trim(),
+      stock: parseInt(document.getElementById("stock").value || 0),
+      unidad_medida: document.getElementById("unidad").value.trim(),
+      precio_unitario: parseFloat(document.getElementById("precio").value || 0),
+      id_categoria: parseInt(document.getElementById("categoria").value),
+      id_marca: parseInt(document.getElementById("marca").value),
+      id_proveedor: parseInt(document.getElementById("proveedor").value),
+      estado: parseInt(document.getElementById("estado").value),
+    };
+
+    if (!nuevoProducto.nombre || !nuevoProducto.precio_unitario || !nuevoProducto.id_categoria) {
+      alert("⚠️ Faltan campos obligatorios.");
+      return;
+    }
 
     try {
       const token = localStorage.getItem("authToken");
-      const respuesta = await fetch("http://localhost:3001/api/categorias", {
+      const respuesta = await fetch("http://localhost:3001/api/productos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(nuevoProducto),
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok) {
+        alert("✅ Producto agregado correctamente");
+        modal.style.display = "none";
+        await recargar();
+      } else {
+        alert(`❌ Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("💥 Error al guardar producto:", error);
+      alert("❌ Error al conectar con el servidor");
+    }
+  }
+
+  // ======================================================
+  // 🗂️ CARGAR OPCIONES EN LOS SELECTS
+  // ======================================================
+  async function cargarCategoriasEnSelect() {
+    const select = document.getElementById("categoria");
+    if (!select) return;
+
+    try {
+      const token = localStorage.getItem("authToken");
+      const res = await fetch("http://localhost:3001/api/categorias", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!respuesta.ok) throw new Error("Error al obtener categorías");
+      if (!res.ok) throw new Error("Error al obtener categorías");
+      const categorias = await res.json();
 
-      const categorias = await respuesta.json();
-      selectCategoria.innerHTML = `
+      select.innerHTML = `
         <option value="">Seleccione una categoría</option>
         <option value="crear-nueva">➕ Crear nueva categoría...</option>
       `;
 
       categorias.forEach((cat) => {
-        const opcion = document.createElement("option");
-        opcion.value = cat.id_categoria;
-        opcion.textContent = cat.nombre;
-        selectCategoria.appendChild(opcion);
+        const opt = document.createElement("option");
+        opt.value = cat.id_categoria;
+        opt.textContent = cat.nombre;
+        select.appendChild(opt);
       });
-
-      console.log(`✅ ${categorias.length} categorías cargadas`);
     } catch (err) {
       console.error("💥 Error cargando categorías:", err);
     }
   }
 
   async function cargarMarcasEnSelect() {
-    const selectMarca = document.getElementById("marca");
-    if (!selectMarca) return console.warn("⚠️ No se encontró el select de marcas");
+    const select = document.getElementById("marca");
+    if (!select) return;
 
     try {
       const token = localStorage.getItem("authToken");
-      const respuesta = await fetch("http://localhost:3001/api/marcas", {
+      const res = await fetch("http://localhost:3001/api/marcas", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!respuesta.ok) throw new Error("Error al obtener marcas");
+      if (!res.ok) throw new Error("Error al obtener marcas");
+      const marcas = await res.json();
 
-      const marcas = await respuesta.json();
-      selectMarca.innerHTML = `
+      select.innerHTML = `
         <option value="">Seleccione una marca</option>
         <option value="crear-nueva">➕ Crear nueva marca...</option>
       `;
 
       marcas.forEach((m) => {
-        const opcion = document.createElement("option");
-        opcion.value = m.id_marca;
-        opcion.textContent = m.nombre;
-        selectMarca.appendChild(opcion);
+        const opt = document.createElement("option");
+        opt.value = m.id_marca;
+        opt.textContent = m.nombre;
+        select.appendChild(opt);
       });
-
-      console.log(`✅ ${marcas.length} marcas cargadas`);
     } catch (err) {
       console.error("💥 Error cargando marcas:", err);
     }
   }
 
   async function cargarProveedoresEnSelect() {
-    const selectProveedor = document.getElementById("proveedor");
-    if (!selectProveedor) return console.warn("⚠️ No se encontró el select de proveedores");
+    const select = document.getElementById("proveedor");
+    if (!select) return;
 
     try {
       const token = localStorage.getItem("authToken");
-      const respuesta = await fetch("http://localhost:3001/api/proveedores", {
+      const res = await fetch("http://localhost:3001/api/proveedores", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!respuesta.ok) throw new Error("Error al obtener proveedores");
+      if (!res.ok) throw new Error("Error al obtener proveedores");
+      const proveedores = await res.json();
 
-      const proveedores = await respuesta.json();
-      selectProveedor.innerHTML = `
+      select.innerHTML = `
         <option value="">Seleccione un proveedor</option>
         <option value="crear-nueva">➕ Crear nuevo proveedor...</option>
       `;
 
       proveedores.forEach((p) => {
-        const opcion = document.createElement("option");
-        opcion.value = p.id_proveedor;
-        opcion.textContent = p.nombre;
-        selectProveedor.appendChild(opcion);
+        const opt = document.createElement("option");
+        opt.value = p.id_proveedor;
+        opt.textContent = p.nombre;
+        select.appendChild(opt);
       });
-
-      console.log(`✅ ${proveedores.length} proveedores cargados`);
     } catch (err) {
       console.error("💥 Error cargando proveedores:", err);
     }
   }
 
   // ======================================================
-  // 🪄 PASO 4 — CREACIÓN RÁPIDA DESDE SELECTS
+  // 🪄 CREACIÓN RÁPIDA DESDE SELECTS
   // ======================================================
   document.addEventListener("change", async (e) => {
-    // 🔹 CATEGORÍA
     if (e.target.id === "categoria" && e.target.value === "crear-nueva") {
-      const nombre = prompt("🟢 Ingrese el nombre de la nueva categoría:");
-      if (!nombre) return (e.target.value = "");
-
-      try {
-        const token = localStorage.getItem("authToken");
-        const res = await fetch("http://localhost:3001/api/categorias", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ nombre }),
-        });
-        const data = await res.json();
-        alert("✅ Categoría creada correctamente");
-        await cargarCategoriasEnSelect();
-        e.target.value = data.data.id_categoria;
-      } catch (err) {
-        console.error("❌ Error creando categoría:", err);
-        alert("Error al crear categoría");
-        e.target.value = "";
-      }
+      await crearDesdeSelect(e, "categoría", "categorias", "id_categoria", cargarCategoriasEnSelect);
     }
-
-    // 🔹 MARCA
     if (e.target.id === "marca" && e.target.value === "crear-nueva") {
-      const nombre = prompt("🟡 Ingrese el nombre de la nueva marca:");
-      if (!nombre) return (e.target.value = "");
-
-      try {
-        const token = localStorage.getItem("authToken");
-        const res = await fetch("http://localhost:3001/api/marcas", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ nombre }),
-        });
-        const data = await res.json();
-        alert("✅ Marca creada correctamente");
-        await cargarMarcasEnSelect();
-        e.target.value = data.id_marca;
-      } catch (err) {
-        console.error("❌ Error creando marca:", err);
-        alert("Error al crear marca");
-        e.target.value = "";
-      }
+      await crearDesdeSelect(e, "marca", "marcas", "id_marca", cargarMarcasEnSelect);
     }
-
-    // 🔹 PROVEEDOR
     if (e.target.id === "proveedor" && e.target.value === "crear-nueva") {
-      const nombre = prompt("🧩 Ingrese el nombre del nuevo proveedor:");
-      if (!nombre) return (e.target.value = "");
-
-      try {
-        const token = localStorage.getItem("authToken");
-        const res = await fetch("http://localhost:3001/api/proveedores", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ nombre }),
-        });
-        const data = await res.json();
-        alert("✅ Proveedor creado correctamente");
-        await cargarProveedoresEnSelect();
-        e.target.value = data.id_proveedor;
-      } catch (err) {
-        console.error("❌ Error creando proveedor:", err);
-        alert("Error al crear proveedor");
-        e.target.value = "";
-      }
+      await crearDesdeSelect(e, "proveedor", "proveedores", "id_proveedor", cargarProveedoresEnSelect);
     }
   });
+
+  async function crearDesdeSelect(e, nombreTipo, endpoint, idCampo, recargar) {
+    const nombre = prompt(`🟢 Ingrese el nombre de la nueva ${nombreTipo}:`);
+    if (!nombre) return (e.target.value = "");
+
+    try {
+      const token = localStorage.getItem("authToken");
+      const res = await fetch(`http://localhost:3001/api/${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ nombre }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || `Error creando ${nombreTipo}`);
+      alert(`✅ ${nombreTipo} creada correctamente`);
+      await recargar();
+      e.target.value = data[idCampo];
+    } catch (err) {
+      console.error(`❌ Error creando ${nombreTipo}:`, err);
+      alert(`Error al crear ${nombreTipo}`);
+      e.target.value = "";
+    }
+  }
 }

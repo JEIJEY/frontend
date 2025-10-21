@@ -1,11 +1,13 @@
 // ======================================================
-// DASHBOARD.JS - VERSIÓN REPARADA Y OPTIMIZADA
+// DASHBOARD.JS - VERSIÓN MODULAR CON LAZY LOADING Y SPA MANAGER
 // ======================================================
 
-// 📦 Contenedor principal del contenido dinámico
+// 📦 Contenedor principal donde se inyectan las vistas dinámicas
 const main = document.querySelector(".dashboard-main");
 
-// 🧩 Utilidades globales (grilla de depuración)
+// ======================================================
+// 🧩 UTILIDADES GLOBALES
+// ======================================================
 import {
   toggleGrilla,
   crearGrillaExacta,
@@ -13,107 +15,95 @@ import {
 } from "../utilities/debugGrid.js";
 
 // ======================================================
-// 🔧 FUNCIÓN PRINCIPAL: CARGA DE SECCIONES DINÁMICAS
+// ⚙️ INTEGRACIÓN DEL GESTOR SPA (Single Page Application)
 // ======================================================
-async function cargarSeccion(nombreSeccion) {
-  try {
-    const archivo =
-      nombreSeccion === "inventario" ? "inventario_dashboard" : nombreSeccion;
+import SPAViewManager from "./SPAViewManager.js";
+import { appEvents } from "../utilities/EventBus.js";
 
-    const res = await fetch(`./dashboard/${archivo}.html`);
-    if (!res.ok) throw new Error(`No se encontró ${archivo}.html`);
-    const html = await res.text();
-    main.innerHTML = html;
+// 1️⃣ Inicializamos el gestor de vistas
+const viewManager = new SPAViewManager({
+  container: main,
+  pagesBase: "./dashboard/", // HTMLs dentro de /pages/dashboard/
+});
 
-    // Esperar un momento para asegurar que el DOM cargue
-    await new Promise((r) => setTimeout(r, 50));
+// 2️⃣ Registramos todas las vistas del dashboard
+viewManager.register("inventario", {
+  html: "inventario_dashboard.html",
+  module: "../../js/dashboard/inventario.js",
+  initExport: "inicializarInventario",
+  afterLoad: async () => {
+    // Al cargar el inventario, inyecta el módulo ABC y observa la grilla
+    await cargarABCparaInventario();
+    observarRedimensionamiento();
+  },
+});
 
-    // Carga dinámica del módulo JS correspondiente
-    switch (nombreSeccion) {
-      case "inventario":
-        console.log("📦 Cargando vista Inventario...");
+// 🆕 Vista “Productos” — usa el mismo módulo inventario.js
+viewManager.register("productos", {
+  html: "productos.html",
+  module: "../../js/dashboard/inventario.js",
+  initExport: "inicializarInventario",
+});
 
-        // 1️⃣ Carga la vista
-        await cargarVistaHTML("inventario_dashboard");
+// Vista “Categorías”
+viewManager.register("categorias", {
+  html: "categorias.html",
+  module: "../../js/dashboard/categorias.js",
+  initExport: "inicializarCategorias",
+});
 
-        // 2️⃣ Carga el módulo ABC (análisis inteligente)
-        await cargarABCparaInventario();
+// Vista “Usuarios”
+viewManager.register("usuarios", {
+  html: "usuarios.html",
+  module: "../../js/dashboard/usuarios.js",
+  initExport: "inicializarUsuarios",
+});
 
-        // 3️⃣ Observa la grilla si está activa
-        observarRedimensionamiento();
-        break;
+// Vista “Reportes”
+viewManager.register("reportes", {
+  html: "reportes.html",
+  module: "../../js/dashboard/reportes.js",
+  initExport: "inicializarReportes",
+});
 
-      case "productos":
-        import("../../js/dashboard/inventario.js").then((mod) =>
-          mod.inicializarInventario?.()
-        );
-        break;
-
-      case "categorias":
-        import("../../js/dashboard/categorias.js").then((mod) =>
-          mod.inicializarCategorias?.()
-        );
-        break;
-
-      case "agregar-producto":
-        import("../../js/dashboard/agregar-producto.js");
-        break;
-
-      case "usuarios":
-        console.log("👥 Módulo usuarios cargado");
-        break;
-
-      case "reportes":
-        console.log("📊 Módulo reportes cargado");
-        break;
-
-      case "configuracion":
-        console.log("⚙️ Módulo configuración cargado");
-        break;
-    }
-  } catch (err) {
-    console.error("❌ Error al cargar sección:", err);
-    main.innerHTML = `<p>Error al cargar ${nombreSeccion}</p>`;
-  }
-}
+// Vista “Configuración”
+viewManager.register("configuracion", {
+  html: "configuracion.html",
+  module: "../../js/dashboard/configuracion.js",
+  initExport: "inicializarConfiguracion",
+});
 
 // ======================================================
-// 🔧 FUNCIÓN AUXILIAR: CARGAR VISTAS ESTÁTICAS
+// 🧭 NAVEGACIÓN DINÁMICA DEL DASHBOARD
 // ======================================================
-async function cargarVistaHTML(nombreArchivo) {
-  try {
-    const res = await fetch(`./dashboard/${nombreArchivo}.html`);
-    if (!res.ok) throw new Error(`No se encontró ${nombreArchivo}.html`);
-    const html = await res.text();
-    main.innerHTML = html;
-  } catch (err) {
-    console.error("❌ Error al cargar vista estática:", err);
-  }
-}
-
-// ======================================================
-// 🚀 Carga inicial del dashboard (por defecto inventario)
-// ======================================================
-(async () => {
-  console.log("🚀 Cargando vista inicial (Inventario con ABC)...");
-  await cargarVistaHTML("inventario_dashboard");
-  await cargarABCparaInventario(); // ✅ se carga ABC al inicio
-})();
-
-
-// ======================================================
-// 🧭 NAVEGACIÓN SIN RECARGAR LA PÁGINA
-// ======================================================
+// Todos los enlaces del sidebar que tengan data-seccion
 document.querySelectorAll(".sidebar-menu__link").forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     const seccion = link.dataset.seccion;
-    if (seccion) cargarSeccion(seccion);
+    if (seccion) {
+      console.log(`🧭 Navegando a vista: ${seccion}`);
+      viewManager.load(seccion);
+    }
+  });
+
+  // 🪄 Precarga el módulo al pasar el mouse (para carga instantánea)
+  link.addEventListener("mouseenter", () => {
+    const seccion = link.dataset.seccion;
+    if (seccion) viewManager.prefetchModule(seccion);
   });
 });
 
 // ======================================================
-// 📂 CONTROL VISUAL DEL SUBMENÚ DE INVENTARIO
+// 🚀 CARGA INICIAL DEL DASHBOARD
+// ======================================================
+(async () => {
+  console.log("🚀 Cargando vista inicial (Inventario con ABC)...");
+  await viewManager.load("inventario");
+})();
+
+// ======================================================
+// 📂 CONTROL DEL SUBMENÚ DE INVENTARIO
 // ======================================================
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("inventarioToggle");
@@ -126,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ======================================================
-// 🎹 ATAJO DE TECLADO "G" PARA MOSTRAR GRILLA DE DEPURACIÓN
+// 🎹 ATAJO DE TECLADO "G" → MOSTRAR / OCULTAR GRILLA DEBUG
 // ======================================================
 document.addEventListener("keydown", (e) => {
   if (e.key.toLowerCase() === "g") {
@@ -135,20 +125,20 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ======================================================
-// 🚀 CARGA ESPECÍFICA PARA EL MÓDULO ABC (ANÁLISIS DE INVENTARIO)
+// 🚀 CARGA ESPECÍFICA PARA EL MÓDULO ABC (Análisis de Inventario)
 // ======================================================
 async function cargarABCparaInventario() {
   console.log("🔄 Iniciando carga de ABC...");
 
   return new Promise((resolve) => {
-    // Evita recargar si ya está cargado
+    // Evita recargar si ya está disponible
     if (window.recalcularABC && window.filtrarProductos) {
       console.log("⚡ ABC.js ya estaba cargado");
       return resolve();
     }
 
     const script = document.createElement("script");
-    script.src = "/src/js/dashboard/abc.js"; // ✅ Ruta absoluta (funciona desde cualquier nivel)
+    script.src = "/src/js/dashboard/abc.js"; // Ruta absoluta (segura)
     script.type = "text/javascript";
     script.defer = true;
 
@@ -170,3 +160,10 @@ async function cargarABCparaInventario() {
     document.head.appendChild(script);
   });
 }
+
+// ======================================================
+// 🧠 EVENTO GLOBAL DEL GESTOR SPA (debug opcional)
+// ======================================================
+appEvents.on("vista-cargada", (vista) => {
+  console.log(`📄 Vista activa: ${vista}`);
+});
