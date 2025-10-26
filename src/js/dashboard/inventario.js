@@ -7,6 +7,10 @@ console.log("✅ inventario.js cargado correctamente");
 
 // 📦 Importaciones necesarias
 import apiClient from "../utilities/apiClient.js";
+import { cargarAlertasStock } from "./alertsDashboard.js"; // ✅ Integración corregida
+
+// 🔥 VARIABLE PARA CONTROLAR SI YA SE INICIALIZÓ
+let vistaCargada = false;
 
 // ======================================================
 // 🚀 FUNCIÓN PRINCIPAL (punto de entrada para SPAViewManager)
@@ -19,11 +23,24 @@ export async function inicializarInventario() {
     await esperarElemento(".invp-dashboard, #tablaProductos");
 
     if (document.querySelector(".invp-dashboard")) {
+      // 🔥 SOLO recargar alertas si YA ESTAMOS en el dashboard
+      if (vistaCargada) {
+        console.log("🔄 Recargando alertas para dashboard existente...");
+        await cargarAlertasStock();
+        return;
+      }
+      
       console.log("🎯 Vista: DASHBOARD DE INVENTARIO detectada");
       inicializarInterfazInventario();
+
+      // ✅ Mostrar tarjeta de alertas (actualiza la original)
+      await cargarAlertasStock();
+      vistaCargada = true;
+
     } else if (document.querySelector("#tablaProductos")) {
       console.log("🎯 Vista: PRODUCTOS detectada");
       inicializarProductos();
+      // ❌ NO marcar vistaCargada en productos
     } else {
       console.warn("⚠️ Ninguna vista compatible detectada");
     }

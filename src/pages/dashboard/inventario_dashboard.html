@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -97,15 +99,19 @@
         </p>
       </header>
 
+      <!-- ⚠️ AQUÍ SE INYECTA LA TARJETA DE ALERTAS DINÁMICAS -->
+      <div class="alertas-dashboard"></div>
+
       <div class="invp-actions-grid">
-        <div class="invp-action-card invp-action-card--urgent">
+        <!-- 🔹 TARJETA ORIGINAL QUE SERÁ ACTUALIZADA POR alertsDashboard.js -->
+        <div class="invp-action-card invp-action-card--urgent alert-card">
           <div class="invp-action-card__header">
             <span class="invp-action-card__icon">🚨</span>
             <h4>Acciones Urgentes</h4>
           </div>
-          <div class="invp-action-card__content">
-            <p><strong>2 productos</strong> con stock crítico</p>
-            <button class="invp-action-button">Ver y resolver</button>
+          <div class="invp-action-card__content alert-info">
+            <p><strong>0</strong> productos con stock crítico</p>
+            <button class="invp-action-button alert-btn" disabled>Ver y resolver</button>
           </div>
         </div>
 

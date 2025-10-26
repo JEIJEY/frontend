@@ -40,12 +40,14 @@
             |-- logout-button.js
         |-- [dashboard]
             |-- abc.js
+            |-- alertsDashboard.js
             |-- categorias.js
             |-- configuracion.js
             |-- dashboard.js
             |-- inventario.js
             |-- navegacion-categorias.js
             |-- productos-vista.js
+            |-- SPAViewManager.js
         |-- [utilities]
             |-- apiClient.js
             |-- debugGrid.js
@@ -91,6 +93,7 @@
             |-- _social-links.css
             |-- _social-login.css
         |-- [organisms]
+            |-- _alerts.css
             |-- _categorias.css
             |-- _dashboard-header.css
             |-- _dashboard-main.css
@@ -112,6 +115,7 @@
             |-- _animations.css
             |-- _debug-grid.css
             |-- _grid.css
+            |-- _loader.css
             |-- _responsive.css
             |-- _spacing.css
         |-- index.css

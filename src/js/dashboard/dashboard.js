@@ -20,6 +20,9 @@ import {
 import SPAViewManager from "./SPAViewManager.js";
 import { appEvents } from "../utilities/EventBus.js";
 
+// ✅ Import correcto del módulo de alertas
+import { cargarAlertasStock } from "./alertsDashboard.js";
+
 // 1️⃣ Inicializamos el gestor de vistas
 const viewManager = new SPAViewManager({
   container: main,
@@ -35,6 +38,9 @@ viewManager.register("inventario", {
     // Al cargar el inventario, inyecta el módulo ABC y observa la grilla
     await cargarABCparaInventario();
     observarRedimensionamiento();
+    
+    // 🔹 Asegurar que el contenedor de alertas exista
+    asegurarContenedorAlertas();
   },
 });
 
@@ -159,6 +165,24 @@ async function cargarABCparaInventario() {
 
     document.head.appendChild(script);
   });
+}
+
+// ======================================================
+// 🆕 Asegurar contenedor de alertas (solo si no existe)
+// ======================================================
+function asegurarContenedorAlertas() {
+  const scope = main || document;
+  let slot = scope.querySelector(".alertas-dashboard");
+
+  if (!slot) {
+    slot = document.createElement("section");
+    slot.className = "alertas-dashboard";
+    if (scope.firstElementChild) {
+      scope.insertBefore(slot, scope.firstElementChild);
+    } else {
+      scope.appendChild(slot);
+    }
+  }
 }
 
 // ======================================================
