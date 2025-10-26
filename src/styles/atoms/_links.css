@@ -11,10 +11,3 @@
   background-clip: text;
   color: transparent;
 }
-
-.link--gradient {
-  background: var(--text-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}

@@ -1,0 +1,250 @@
+
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Reporte de Conflictos CSS (sin media queries)</title>
+    <style>
+      body { font-family: "Poppins", sans-serif; background: #f9fafb; padding: 2rem; color: #111; }
+      h1 { font-size: 1.6rem; margin-bottom: 1rem; }
+      table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+      th, td { border: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; vertical-align: top; }
+      th { background: #111827; color: #fff; font-weight: 600; }
+      tr:nth-child(even) { background: #f3f4f6; }
+      code { background: #f3f4f6; padding: 0.1rem 0.25rem; border-radius: 4px; }
+      .summary { margin-bottom: 1rem; background: #e0f2fe; border-left: 4px solid #0284c7; padding: 1rem; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>📊 Reporte de Conflictos CSS (Ignora media queries)</h1>
+    <div class="summary">
+      Total conflictos detectados: <strong>43</strong>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Selector</th>
+          <th>Propiedad</th>
+          <th>Detalles de conflicto</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      <tr>
+        <td><code>.btn</code></td>
+        <td>gap</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--space-2)</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>6px</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>8px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>padding</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--space-3) var(--space-6)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>0.75rem 1.5rem</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>8px 14px</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>12px 24px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>border-radius</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--border-radius)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>6px</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>6px</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>6px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>font-size</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--text-base)</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>14px</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>0.95rem</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>font-weight</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--font-medium)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>600</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>500</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>500</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>transition</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>all var(--transition-normal)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>background-color 0.2s ease, transform 0.1s ease</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>background 0.3s ease</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>all 0.2s ease</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn</code></td>
+        <td>color</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--white-color)</code></div><div><strong>dist\cleaned-css\_inventario.css</strong> → <code>white</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--primary</code></td>
+        <td>color</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--white-color)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>white</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>white</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--primary:hover</code></td>
+        <td>transform</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>translateY(-2px)</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>translateY(-1px)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--primary:hover</code></td>
+        <td>box-shadow</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>0 6px 20px rgba(46, 184, 114, 0.4)</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>0 4px 8px rgba(67, 97, 238, 0.3)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--secondary</code></td>
+        <td>border</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>2px solid var(--white-color)</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>1px solid #dee2e6</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--secondary</code></td>
+        <td>color</td>
+        <td><div><strong>dist\cleaned-css\_buttons.css</strong> → <code>var(--white-color)</code></div><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>white</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>#495057</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.card</code></td>
+        <td>background</td>
+        <td><div><strong>dist\cleaned-css\_cards.css</strong> → <code>var(--container-bg)</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>white</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.card</code></td>
+        <td>border-radius</td>
+        <td><div><strong>dist\cleaned-css\_cards.css</strong> → <code>var(--border-radius-lg)</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>10px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.card</code></td>
+        <td>padding</td>
+        <td><div><strong>dist\cleaned-css\_cards.css</strong> → <code>var(--space-6)</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>20px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.card</code></td>
+        <td>box-shadow</td>
+        <td><div><strong>dist\cleaned-css\_cards.css</strong> → <code>0 8px 32px rgba(0, 0, 0, 0.1)</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>0 2px 10px rgba(0, 0, 0, 0.1)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>from</code></td>
+        <td>transform</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>translateY(20px)</code></div><div><strong>dist\cleaned-css\_logout-button.css</strong> → <code>rotate(0deg) scale(0.94)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>to</code></td>
+        <td>transform</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>translateY(0)</code></div><div><strong>dist\cleaned-css\_logout-button.css</strong> → <code>rotate(359deg) scale(0.94)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.form-row</code></td>
+        <td>gap</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>1rem</code></div><div><strong>dist\cleaned-css\_forms.css</strong> → <code>var(--space-4)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.form-actions</code></td>
+        <td>gap</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>1rem</code></div><div><strong>dist\cleaned-css\_forms.css</strong> → <code>var(--space-4)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.form-actions</code></td>
+        <td>margin-top</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>2rem</code></div><div><strong>dist\cleaned-css\_forms.css</strong> → <code>var(--space-8)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--primary</code></td>
+        <td>background-color</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>#3b82f6</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>#4361ee</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--primary:hover</code></td>
+        <td>background-color</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>#2563eb</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>#3a56d4</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--secondary</code></td>
+        <td>background-color</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>#6b7280</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>#f8f9fa</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.btn--secondary:hover</code></td>
+        <td>background-color</td>
+        <td><div><strong>dist\cleaned-css\_categorias.css</strong> → <code>#4b5563</code></div><div><strong>dist\cleaned-css\_modal-producto.css</strong> → <code>#e9ecef</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.dashboard-main</code></td>
+        <td>background-color</td>
+        <td><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>#f5f5f5</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>white</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>#fff</code></div><div><strong>dist\cleaned-css\_dashboard.css</strong> → <code>#fff</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.dashboard-main</code></td>
+        <td>height</td>
+        <td><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>auto</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>100%</code></div><div><strong>dist\cleaned-css\_dashboard.css</strong> → <code>100%</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.dashboard-main</code></td>
+        <td>min-height</td>
+        <td><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>100vh</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>calc(100vh - 80px)</code></div><div><strong>dist\cleaned-css\_dashboard.css</strong> → <code>calc(100vh - 145px)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.dashboard-main</code></td>
+        <td>overflow</td>
+        <td><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>visible</code></div><div><strong>dist\cleaned-css\_dashboard-main.css</strong> → <code>visible</code></div><div><strong>dist\cleaned-css\_dashboard.css</strong> → <code>hidden</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.header__nav-link:hover</code></td>
+        <td>background</td>
+        <td><div><strong>dist\cleaned-css\_header.css</strong> → <code>var(--text-gradient)</code></div><div><strong>dist\cleaned-css\_header.css</strong> → <code>rgba(255, 255, 255, 0.1)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>100%</code></td>
+        <td>transform</td>
+        <td><div><strong>dist\cleaned-css\_loader.css</strong> → <code>rotate(360deg)</code></div><div><strong>dist\cleaned-css\_logout-button.css</strong> → <code>rotate(-1deg)</code></div><div><strong>dist\cleaned-css\_redirect-screen.css</strong> → <code>rotate(360deg)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card</code></td>
+        <td>gap</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>1.5rem</code></div><div><strong>dist\cleaned-css\_login-form.css</strong> → <code>var(--space-6)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card</code></td>
+        <td>padding</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>2rem</code></div><div><strong>dist\cleaned-css\_login-form.css</strong> → <code>var(--space-8)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card</code></td>
+        <td>border-radius</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>12px</code></div><div><strong>dist\cleaned-css\_login-form.css</strong> → <code>var(--border-radius-lg)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__header</code></td>
+        <td>flex-direction</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>row</code></div><div><strong>dist\cleaned-css\_logo.css</strong> → <code>column</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__header</code></td>
+        <td>margin-bottom</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>1rem</code></div><div><strong>dist\cleaned-css\_logo.css</strong> → <code>var(--space-4)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__brand</code></td>
+        <td>max-height</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>150px</code></div><div><strong>dist\cleaned-css\_logo.css</strong> → <code>60px</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__separator</code></td>
+        <td>margin</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>1.5rem 0</code></div><div><strong>dist\cleaned-css\_separator.css</strong> → <code>var(--space-6) 0</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__separator:not(:empty)::before</code></td>
+        <td>margin-right</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>0.5em</code></div><div><strong>dist\cleaned-css\_separator.css</strong> → <code>var(--space-2)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__separator:not(:empty)::after</code></td>
+        <td>margin-left</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>0.5em</code></div><div><strong>dist\cleaned-css\_separator.css</strong> → <code>var(--space-2)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__footer</code></td>
+        <td>font-size</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>0.9rem</code></div><div><strong>dist\cleaned-css\_login-footer.css</strong> → <code>var(--text-sm)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>.login-card__footer a</code></td>
+        <td>font-weight</td>
+        <td><div><strong>dist\cleaned-css\_login-card.css</strong> → <code>bold</code></div><div><strong>dist\cleaned-css\_login-footer.css</strong> → <code>var(--font-semibold)</code></div></td>
+      </tr>
+      <tr>
+        <td><code>0%</code></td>
+        <td>transform</td>
+        <td><div><strong>dist\cleaned-css\_logout-button.css</strong> → <code>rotate(-1deg)</code></div><div><strong>dist\cleaned-css\_redirect-screen.css</strong> → <code>rotate(0deg)</code></div></td>
+      </tr>
+      </tbody>
+    </table>
+  </body>
+  </html>

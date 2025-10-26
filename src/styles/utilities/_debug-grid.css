@@ -69,10 +69,4 @@
 /* ======================================================
    🟦 VISUALIZAR GAPS (si existen)
    ====================================================== */
-.debug-grid .debug-gap-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: var(--dbg-grid-gap-color);
-  z-index: -1;
-  margin: calc(var(--dbg-grid-gap) / 2);
-}
+

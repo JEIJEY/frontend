@@ -15,27 +15,3 @@
   justify-content: flex-end;
   margin-top: var(--space-8);
 }
-
-.form-help {
-  font-size: var(--text-sm);
-  color: var(--text-color-light);
-  margin-top: var(--space-2);
-}
-
-.form-error {
-  font-size: var(--text-sm);
-  color: #ff6b6b;
-  margin-top: var(--space-2);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.form-success {
-  font-size: var(--text-sm);
-  color: var(--primary-color);
-  margin-top: var(--space-2);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}

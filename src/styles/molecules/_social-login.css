@@ -1,10 +1,4 @@
 /* =========== SOCIAL LOGIN MOLECULE =========== */
-.social-login {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
-}
 
 .social-login__link {
   display: inline-flex;

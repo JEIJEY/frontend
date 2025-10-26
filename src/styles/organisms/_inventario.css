@@ -82,17 +82,6 @@ Mantiene la coherencia con el dashboard La Rivera
 }
 
 /* 🟢 Estado activo/inactivo */
-.estado-activo {
-  color: #16a34a;
-  font-weight: 600;
-  text-align: center;
-}
-
-.estado-inactivo {
-  color: #dc2626;
-  font-weight: 600;
-  text-align: center;
-}
 
 /* 📅 Fechas */
 .inventario__tabla td:nth-last-child(-n+2) {
@@ -124,5 +113,4 @@ Mantiene la coherencia con el dashboard La Rivera
 .btn i {
   font-size: 1rem;
 }
-
 

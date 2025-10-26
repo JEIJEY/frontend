@@ -61,8 +61,7 @@
   border-radius: var(--border-radius);
 }
 
-.header__nav-link:hover,
-.header__nav-link--active {
+.header__nav-link:hover {
   background: var(--text-gradient);
   -webkit-background-clip: text;
   background-clip: text;

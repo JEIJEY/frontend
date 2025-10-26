@@ -7,20 +7,3 @@
   margin-bottom: var(--space-2);
   transition: all var(--transition-normal);
 }
-
-.label--required::after {
-  content: " *";
-  color: #ff6b6b;
-}
-
-.label--disabled {
-  color: var(--text-color-light);
-  opacity: 0.7;
-}
-
-.label--inline {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: 0;
-}

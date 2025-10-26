@@ -38,12 +38,6 @@
   background-color: #fef2f2;
 }
 
-.error-message {
-  color: #ef4444;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
 .categoria-form button {
   margin-top: 10px;
   background-color: var(--primary-color, #007bff);
@@ -146,10 +140,6 @@
 
 .badge.categoria {
   background: #3b82f6;
-}
-
-.badge.subcategoria {
-  background: #8b5cf6;
 }
 
 .badge.producto {
@@ -382,23 +372,10 @@
 }
 
 /* Mensajes de éxito */
-.success-message {
-  background: #d1fae5;
-  color: #065f46;
-  padding: 0.75rem;
-  border-radius: 6px;
-  margin: 0.5rem 0;
-  font-size: 0.875rem;
-}
 
 /* =========================================================
    🎯 ESTADOS DE CARGA (LOADING)
 ========================================================= */
-.loading-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
 
 @keyframes loading {
   0% {
@@ -407,13 +384,6 @@
   100% {
     background-position: -200% 0;
   }
-}
-
-.skeleton-card {
-  border-radius: 12px;
-  padding: 1.25rem;
-  height: 150px;
-  margin-bottom: 1rem;
 }
 
 /* =========================================================
@@ -566,11 +536,6 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.modal[style*="display: flex"] {
-  opacity: 1;
-  visibility: visible;
-}
-
 /* Contenido del modal */
 .modal-content {
   background: rgb(224, 7, 7);
@@ -584,10 +549,6 @@
   position: relative;
   transform: translateY(-20px);
   transition: transform 0.3s ease;
-}
-
-.modal[style*="display: flex"] .modal-content {
-  transform: translateY(0);
 }
 
 /* Botón de cerrar */

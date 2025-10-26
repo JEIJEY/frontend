@@ -1,3 +1,105 @@
+|-- [dist]
+    |-- [cleaned-css]
+        |-- _alerts.css
+        |-- _animations.css
+        |-- _base.css
+        |-- _buttons.css
+        |-- _cards.css
+        |-- _categorias.css
+        |-- _dashboard-header.css
+        |-- _dashboard-main.css
+        |-- _dashboard-sidebar.css
+        |-- _dashboard.css
+        |-- _debug-grid.css
+        |-- _footer.css
+        |-- _forms.css
+        |-- _grid.css
+        |-- _header.css
+        |-- _headings.css
+        |-- _hero.css
+        |-- _icons.css
+        |-- _images.css
+        |-- _inputs.css
+        |-- _inventario.css
+        |-- _labels.css
+        |-- _links.css
+        |-- _list-items.css
+        |-- _loader.css
+        |-- _login-card.css
+        |-- _login-footer.css
+        |-- _login-form.css
+        |-- _logo.css
+        |-- _logout-button.css
+        |-- _modal-producto.css
+        |-- _navigation.css
+        |-- _product-cards.css
+        |-- _products-grid.css
+        |-- _promo-section.css
+        |-- _redirect-screen.css
+        |-- _reset.css
+        |-- _responsive.css
+        |-- _separator.css
+        |-- _social-links.css
+        |-- _social-login.css
+        |-- _spacing.css
+        |-- _typography.css
+        |-- _variables.css
+        |-- index.css
+        |-- inventario_dashboard.css
+        |-- report.txt
+    |-- [src]
+        |-- [styles]
+            |-- [atoms]
+                |-- _buttons.css
+                |-- _headings.css
+                |-- _icons.css
+                |-- _images.css
+                |-- _inputs.css
+                |-- _labels.css
+                |-- _links.css
+                |-- _logout-button.css
+            |-- [base]
+                |-- _base.css
+                |-- _reset.css
+                |-- _typography.css
+                |-- _variables.css
+            |-- [molecules]
+                |-- _cards.css
+                |-- _forms.css
+                |-- _list-items.css
+                |-- _login-footer.css
+                |-- _logo.css
+                |-- _navigation.css
+                |-- _product-cards.css
+                |-- _separator.css
+                |-- _social-links.css
+                |-- _social-login.css
+            |-- [organisms]
+                |-- _alerts.css
+                |-- _categorias.css
+                |-- _dashboard-header.css
+                |-- _dashboard-main.css
+                |-- _dashboard-sidebar.css
+                |-- _dashboard.css
+                |-- _footer.css
+                |-- _header.css
+                |-- _hero.css
+                |-- _inventario.css
+                |-- _login-card.css
+                |-- _login-form.css
+                |-- _modal-producto.css
+                |-- _products-grid.css
+                |-- _promo-section.css
+                |-- _redirect-screen.css
+                |-- inventario_dashboard.css
+            |-- [utilities]
+                |-- _animations.css
+                |-- _debug-grid.css
+                |-- _grid.css
+                |-- _loader.css
+                |-- _responsive.css
+                |-- _spacing.css
+            |-- index.css
 |-- [docs]
     |-- AVANCE_TAXONOMIA.md
     |-- KANBAN_TAXONOMIA.md
@@ -5,8 +107,6 @@
     |-- PLAN_IMPLEMENTACION_TAXONOMIA_DINAMICA_CONTINUO.md
 |-- [src]
     |-- [assets]
-        |-- [fonts]
-        |-- [icons]
         |-- [images]
             |-- add-product.png
             |-- AVATAR.png
@@ -110,7 +210,6 @@
             |-- _promo-section.css
             |-- _redirect-screen.css
             |-- inventario_dashboard.css
-        |-- [templates]
         |-- [utilities]
             |-- _animations.css
             |-- _debug-grid.css
@@ -119,10 +218,13 @@
             |-- _responsive.css
             |-- _spacing.css
         |-- index.css
-        |-- tailwind-output.css
-        |-- tailwind.css
 |-- .gitignore
+|-- .stylelintrc.json
+|-- clean-report.mjs
+|-- css_conflicts_report.html
+|-- css_conflicts_report.js
 |-- estructura.txt
+|-- Flujo Limpieza Css.md
 |-- index.html
 |-- package-lock.json
 |-- package.json

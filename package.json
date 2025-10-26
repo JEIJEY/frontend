@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+      "purge": "powershell -Command \"if (-not (Test-Path dist)) { mkdir dist }; if (-not (Test-Path dist\\cleaned-css)) { mkdir dist\\cleaned-css }; Get-ChildItem -Path 'src/styles' -Recurse -Filter '*.css' | ForEach-Object { $name = Split-Path $_.FullName -Leaf; npx purgecss --content 'src/**/*.html' 'src/**/*.js' --css $_.FullName --output ('dist/cleaned-css/' + $name) }\"",
+    "purge:report": "node clean-report.mjs",
+    "lint:css": "npx stylelint 'src/styles/**/*.css'"
+
   },
   "keywords": [],
   "author": "",
@@ -19,6 +23,9 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
+    "purgecss": "^7.0.2",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^3.4.10"
   }
 }

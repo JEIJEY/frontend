@@ -1,5 +1,5 @@
 /* =========== TYPOGRAPHY =========== */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4 {
   font-family: var(--font-secondary);
   font-weight: var(--font-normal);
   color: var(--title-color);
@@ -10,8 +10,6 @@ h1 { font-size: var(--text-5xl); }
 h2 { font-size: var(--text-4xl); }
 h3 { font-size: var(--text-3xl); }
 h4 { font-size: var(--text-2xl); }
-h5 { font-size: var(--text-xl); }
-h6 { font-size: var(--text-lg); }
 
 body, p, li, a, span {
   font-family: var(--font-primary);
@@ -22,11 +20,4 @@ body, p, li, a, span {
   font-size: var(--text-4xl);
   text-align: center;
   margin-bottom: var(--space-8);
-}
-
-.section__title-gradient {
-  background: var(--text-gradient);
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
 }

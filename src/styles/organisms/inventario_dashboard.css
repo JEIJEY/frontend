@@ -1,44 +1,39 @@
 /* ======================================================
-   🔤 ESCALA TIPOGRÁFICA GLOBAL
+   🔤 ESCALA TIPOGRÁFICA LOCAL (solo dentro del dashboard)
    Basada en referencia visual: h1=20px → h5=10px
 ====================================================== */
-h1 {
+.invp-dashboard-grid h1 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-h2 {
+.invp-dashboard-grid h2 {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 0.4rem;
 }
 
-h3 {
+.invp-dashboard-grid h3 {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 0.3rem;
 }
 
-h4 {
+.invp-dashboard-grid h4 {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 0.3rem;
 }
 
-h5 {
-  font-size: 10px;
-  font-weight: 500;
-  margin-bottom: 0.2rem;
-}
-
-/* Para mantener consistencia con los párrafos */
-p {
+/* Para mantener consistencia con los párrafos del dashboard */
+.invp-dashboard-grid p {
   font-size: 12px;
   line-height: 1.5;
   color: #444;
   margin: 0.2rem 0;
 }
+
 
 .invp-dashboard-grid {
   display: grid;

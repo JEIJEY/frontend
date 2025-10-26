@@ -18,7 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-img, picture, video, canvas, svg {
+img, svg {
   display: block;
   max-width: 100%;
   height: auto;
@@ -39,7 +39,7 @@ a {
   color: inherit;
 }
 
-ul, ol {
+ul {
   list-style: none;
 }
 

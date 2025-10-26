@@ -188,8 +188,3 @@
 .sidebar-menu__item:nth-child(5) .sidebar-menu__link {
   width: 220px;
 }
-
-.sidebar-footer__link:nth-child(1),
-.sidebar-footer__link:nth-child(2) {
-  width: 100px;
-}
